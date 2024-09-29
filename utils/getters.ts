@@ -65,6 +65,14 @@ export const getTvShows = async (
   return response.json();
 };
 
+export const getSingleMovie = async (id: number): Promise<SingleMovie> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/movie/${id}?append_to_response=credits&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};
+
 export const getMovieArray = async (
   movieIds: number[],
 ): Promise<SingleMovie[]> => {

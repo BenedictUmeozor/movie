@@ -35,6 +35,13 @@ export interface Cast {
   order: number;
 }
 
+export interface ProductionCompany {
+  id: number;
+  logo_path: string | null;
+  name: string;
+  origin_country: string;
+}
+
 export interface SingleMovie {
   adult: boolean;
   backdrop_path: string;
@@ -57,12 +64,7 @@ export interface SingleMovie {
   overview: string;
   popularity: number;
   poster_path: string;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-  }[];
+  production_companies: ProductionCompany[];
   production_countries: {
     iso_3166_1: string;
     name: string;

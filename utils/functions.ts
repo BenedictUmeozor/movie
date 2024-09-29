@@ -11,3 +11,7 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 
   return shuffledArray;
 };
+
+export function formatNumberWithCommas(number: number): string {
+  return number.toLocaleString("en-US");
+}
