@@ -6,20 +6,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "../ui/button";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Cast } from "@/types/globals";
-import { ScrollArea } from "../ui/scroll-area";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const CastSheet = ({
-  cast,
-  movieTitle,
-}: {
-  cast: Cast[];
-  movieTitle: string;
-}) => {
+const CastSheet = ({ cast, title }: { cast: Cast[]; title?: string }) => {
   const trimmed = cast.filter((person) => !!person.profile_path);
 
   return (
@@ -37,7 +31,9 @@ const CastSheet = ({
       >
         <SheetHeader>
           <SheetTitle className="text-white">Cast</SheetTitle>
-          <SheetDescription>Full cast for {movieTitle}</SheetDescription>
+          <SheetDescription>
+            {title ? `Full cast for ${title}` : "Full cast"}
+          </SheetDescription>
         </SheetHeader>
         <ScrollArea>
           <div className="space-y-6 text-white">

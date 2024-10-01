@@ -1,22 +1,16 @@
 import { Cast as Castinterface } from "@/types/globals";
-import Container from "../ui/container";
 import Image from "next/image";
 import CastSheet from "./cast-sheet";
+import Container from "@/components/ui/container";
 
-const Cast = ({
-  cast,
-  movieTitle,
-}: {
-  cast: Castinterface[];
-  movieTitle: string;
-}) => {
+const Cast = ({ cast, title }: { cast: Castinterface[]; title?: string }) => {
   const trimmed = cast.filter((person) => !!person.profile_path).slice(0, 12);
 
   return (
     <div className="my-12">
       <Container>
         <h3 className="mb-8 flex items-center gap-2 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
-          Top Cast <CastSheet cast={cast} movieTitle={movieTitle} />
+          Top Cast <CastSheet cast={cast} title={title} />
         </h3>
         <div
           style={{ rowGap: "2rem" }}

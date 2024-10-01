@@ -5,11 +5,12 @@ import { TvShow } from "@/types/globals";
 import Image from "next/image";
 import { Badge } from "./badge";
 import clsx from "clsx";
+import Link from "next/link";
 
 const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
   return (
     <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
-      <div className="relative mx-auto">
+      <Link href={`/tv-show/${tvShow.id}`} className="relative mx-auto block">
         <Image
           src={process.env.NEXT_PUBLIC_IMG_URL + tvShow.poster_path}
           alt={tvShow.name}
@@ -46,7 +47,7 @@ const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
         >
           {tvShow.vote_average.toFixed(1)}
         </Badge>
-      </div>
+      </Link>
       <div className="mx-auto space-y-2 py-1">
         <h3 className="text-sm font-semibold">{tvShow.name}</h3>
         <p className="text-sm text-light-white">

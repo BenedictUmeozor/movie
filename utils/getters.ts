@@ -2,6 +2,7 @@ import {
   Genre,
   MovieResponse,
   SingleMovie,
+  SingleTvShow,
   TvShowApiResponse,
 } from "@/types/globals";
 
@@ -69,6 +70,14 @@ export const getSingleMovie = async (id: number): Promise<SingleMovie> => {
   const response = await fetch(
     `${process.env.API_BASE_URL}/movie/${id}?append_to_response=credits&api_key=${process.env.API_KEY}`,
   );
+
+  return response.json();
+};
+
+export const getSingleTvShow = async (id: number): Promise<SingleTvShow> => {
+  const response = await fetch(`
+${process.env.API_BASE_URL}/tv/${id}?append_to_response=credits&api_key=${process.env.API_KEY}
+`);
 
   return response.json();
 };
