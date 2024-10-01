@@ -3,6 +3,7 @@ import Container from "../ui/container";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { formatNumberWithCommas } from "@/utils/functions";
+import clsx from "clsx";
 
 const Banner = ({ movie }: { movie: SingleMovie }) => {
   const genres = movie.genres.map((genre) => genre.name).join(", ");
@@ -39,8 +40,34 @@ const Banner = ({ movie }: { movie: SingleMovie }) => {
               <li className="grid grid-cols-[120px_1fr] items-center gap-4">
                 <span className="font-medium">User score:</span>
                 <div>
-                  <Badge className="bg-green-500 hover:bg-green-500">
-                    {movie.vote_average}
+                  <Badge
+                    className={clsx(
+                      {
+                        "bg-teal-500 hover:bg-teal-500":
+                          movie.vote_average >= 9,
+                      },
+                      {
+                        "bg-green-500 hover:bg-green-500":
+                          movie.vote_average >= 8 && movie.vote_average < 9,
+                      },
+                      {
+                        "bg-lime-500 hover:bg-lime-500":
+                          movie.vote_average >= 7 && movie.vote_average < 8,
+                      },
+                      {
+                        "bg-yellow-400 hover:bg-yellow-400":
+                          movie.vote_average >= 6 && movie.vote_average < 7,
+                      },
+                      {
+                        "bg-orange-400 hover:bg-orange-400":
+                          movie.vote_average >= 5 && movie.vote_average < 6,
+                      },
+                      {
+                        "bg-red-500 hover:bg-red-500": movie.vote_average < 5,
+                      },
+                    )}
+                  >
+                    {movie.vote_average.toFixed(1)}
                   </Badge>
                 </div>
               </li>

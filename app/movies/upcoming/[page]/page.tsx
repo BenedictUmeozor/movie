@@ -3,17 +3,7 @@ import Upcoming from "@/components/upcoming/upcoming";
 import { getGenres, getUpcomingMovies } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
-  const { total_pages } = await getUpcomingMovies();
-
-  const pageNumbers = [];
-
-  for (let i = 1; i <= total_pages; i++) {
-    pageNumbers.push(i);
-  }
-
-  return pageNumbers.map((page) => ({
-    page: page.toString(),
-  }));
+  return [];
 };
 
 export default async function Page({

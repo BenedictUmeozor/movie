@@ -3,17 +3,7 @@ import TopRated from "@/components/top-rated/top-rated";
 import { getGenres, getTopRatedMovies } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
-  const { total_pages } = await getTopRatedMovies();
-
-  const pageNumbers = [];
-
-  for (let i = 1; i <= total_pages; i++) {
-    pageNumbers.push(i);
-  }
-
-  return pageNumbers.map((page) => ({
-    page: page.toString(),
-  }));
+  return [];
 };
 
 export default async function Page({

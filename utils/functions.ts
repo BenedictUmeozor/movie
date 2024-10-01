@@ -1,3 +1,20 @@
+type RatingColorClass =
+  | "bg-teal-500"
+  | "bg-green-500"
+  | "bg-lime-500"
+  | "bg-yellow-400"
+  | "bg-orange-400"
+  | "bg-red-500";
+
+export function getRatingColorClass(rating: number): RatingColorClass {
+  if (rating >= 9.0) return "bg-teal-500";
+  if (rating >= 8.0) return "bg-green-500";
+  if (rating >= 7.0) return "bg-lime-500";
+  if (rating >= 6.0) return "bg-yellow-400";
+  if (rating >= 5.0) return "bg-orange-400";
+  return "bg-red-500";
+}
+
 export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffledArray = [...array];
 

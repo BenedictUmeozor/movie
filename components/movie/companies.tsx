@@ -15,7 +15,10 @@ const Companies = ({ companies }: { companies: ProductionCompany[] }) => {
       </h3>
       <div className="grid grid-cols-8 gap-4">
         {trimmed.map((company) => (
-          <div key={company.id} className="space-y-2 rounded bg-gray-50 p-2">
+          <div
+            key={company.id}
+            className="grid place-items-center space-y-2 rounded bg-gray-50 p-2"
+          >
             <div>
               <Image
                 src={process.env.IMG_URL + company.logo_path}

@@ -76,9 +76,12 @@ const Hero = memo(
         <Container>
           {movies.length > 0 && (
             <div className="space-y-6">
-              <h1 className="text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl">
+              <Link
+                href={`/movie/${movies[randIndex].id}`}
+                className="text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
+              >
                 {movies[randIndex].title}
-              </h1>
+              </Link>
               <div className="flex h-5 items-center space-x-4 text-sm font-medium max-lg:justify-center">
                 <div className="flex items-center gap-2">
                   <div className="w-14">
