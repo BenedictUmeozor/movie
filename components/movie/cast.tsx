@@ -1,20 +1,30 @@
 import { Cast as Castinterface } from "@/types/globals";
 import Container from "../ui/container";
 import Image from "next/image";
+import CastSheet from "./cast-sheet";
 
-const Cast = ({ cast }: { cast: Castinterface[] }) => {
+const Cast = ({
+  cast,
+  movieTitle,
+}: {
+  cast: Castinterface[];
+  movieTitle: string;
+}) => {
   const trimmed = cast.filter((person) => !!person.profile_path).slice(0, 12);
 
   return (
     <div className="my-12">
       <Container>
-        <h3 className="mb-8 text-2xl font-bold leading-normal tracking-wide">
-          Top Cast
+        <h3 className="mb-8 flex items-center gap-2 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
+          Top Cast <CastSheet cast={cast} movieTitle={movieTitle} />
         </h3>
-        <div style={{ rowGap: "2rem" }} className="grid grid-cols-4">
+        <div
+          style={{ rowGap: "2rem" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {trimmed.map((person) => (
             <div key={person.id} className="flex items-center gap-4">
-              <div className="h-20 w-20 rounded-full">
+              <div className="h-14 w-14 rounded-full md:h-16 md:w-16 lg:h-20 lg:w-20">
                 <Image
                   src={process.env.IMG_URL + person.profile_path}
                   alt={person.name}

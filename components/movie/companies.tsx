@@ -10,10 +10,10 @@ const Companies = ({ companies }: { companies: ProductionCompany[] }) => {
   }
   return (
     <Container className="my-12">
-      <h3 className="mb-8 text-2xl font-bold leading-normal tracking-wide">
+      <h3 className="mb-8 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
         Production Companies
       </h3>
-      <div className="grid grid-cols-8 gap-4">
+      <div className="grid grid-cols-3 gap-4 md:grid-cols-6 lg:grid-cols-8">
         {trimmed.map((company) => (
           <div
             key={company.id}

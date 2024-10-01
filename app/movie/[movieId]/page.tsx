@@ -2,6 +2,7 @@ import Banner from "@/components/movie/banner";
 import Cast from "@/components/movie/cast";
 import Companies from "@/components/movie/companies";
 import Reviews from "@/components/movie/reviews";
+import SimilarMovies from "@/components/movie/similar-movies";
 import { getSingleMovie } from "@/utils/getters";
 
 export async function generateStaticParams() {
@@ -19,8 +20,9 @@ export default async function Page({
     <main>
       <Banner movie={movie} />
       <Companies companies={movie.production_companies} />
-      <Cast cast={movie.credits.cast} />
+      <Cast cast={movie.credits.cast} movieTitle={movie.title} />
       <Reviews />
+      <SimilarMovies movieId={params.movieId} />
     </main>
   );
 }

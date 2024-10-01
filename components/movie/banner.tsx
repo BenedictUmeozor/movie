@@ -15,8 +15,26 @@ const Banner = ({ movie }: { movie: SingleMovie }) => {
   return (
     <div className="mt-12">
       <Container>
+        <div className="mb-8 grid grid-cols-[0.8fr_1fr] gap-6 lg:hidden">
+          <div>
+            <Image
+              src={process.env.IMG_URL + movie.poster_path}
+              alt={movie.original_title}
+              height={200}
+              width={200}
+              className="aspect-[4/6] w-full object-cover"
+            />
+          </div>
+          <div>
+            <h3 className="mb-2 text-xl font-bold leading-normal tracking-wide">
+              {movie.title}
+            </h3>
+            <p className="text-medium-white">Movie</p>
+          </div>
+        </div>
+
         <div className="grid-cols-12 gap-8 lg:grid">
-          <div className="col-span-3">
+          <div className="col-span-3 max-lg:hidden">
             <Image
               src={process.env.IMG_URL + movie.poster_path}
               alt={movie.original_title}
@@ -26,10 +44,10 @@ const Banner = ({ movie }: { movie: SingleMovie }) => {
             />
           </div>
           <div className="col-span-9">
-            <h3 className="mb-2 text-4xl font-bold leading-normal tracking-wide">
+            <h3 className="mb-2 text-4xl font-bold leading-normal tracking-wide max-lg:hidden">
               {movie.title}
             </h3>
-            <p className="mb-8 text-medium-white">Movie</p>
+            <p className="mb-8 text-medium-white max-lg:hidden">Movie</p>
             <ul className="space-y-3">
               <li className="grid grid-cols-[120px_1fr] items-center gap-4">
                 <span className="font-medium">Title:</span>
