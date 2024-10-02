@@ -1,6 +1,7 @@
 import Banner from "@/components/movie/banner";
 import Reviews from "@/components/movie/reviews";
 import SimilarMovies from "@/components/movie/similar-movies";
+import Videos from "@/components/movie/videos";
 import Cast from "@/components/shared/cast/cast";
 import Companies from "@/components/shared/companies";
 import { getSingleMovie } from "@/utils/getters";
@@ -24,6 +25,7 @@ export default async function Page({
   return (
     <main>
       <Banner movie={movie} />
+      <Videos movieId={params.movieId} />
       <Companies companies={movie.production_companies} />
       <Cast cast={movie.credits.cast} title={movie.title} />
       <Reviews />

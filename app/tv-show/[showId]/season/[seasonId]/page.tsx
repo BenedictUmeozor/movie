@@ -1,6 +1,7 @@
 import Banner from "@/components/season/banner";
 import Episodes from "@/components/season/episodes";
 import Review from "@/components/season/review";
+import Videos from "@/components/season/videos";
 import Cast from "@/components/shared/cast/cast";
 import { TVShowController } from "@/types/tvshow";
 // import { getSingleTvShow } from "@/utils/getters";
@@ -43,6 +44,7 @@ export default async function Page({
   return (
     <main>
       <Banner season={details} />
+      <Videos seasonId={params.seasonId} tvShowId={params.showId} />
       <Episodes episodes={details.episodes} showId={params.showId} />
       <Cast cast={details.credits.cast} title={details.name} />
       <Review />
