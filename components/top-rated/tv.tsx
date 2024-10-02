@@ -1,18 +1,20 @@
-import { getGenres, getMovies } from "@/utils/getters";
+import { getTopRatedTvs, getTvGenres } from "@/utils/getters";
 import Container from "../ui/container";
-import Movie from "../ui/movie";
 import GenreSorter from "../shared/genre-sorter";
 import PaginationComponent from "../shared/pagination";
+import TVShow from "../ui/tvshow";
 
-const Discover = async ({
+const TopRated = async ({
   searchParams,
   params,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
   params?: { page: string };
 }) => {
-  const { genres } = await getGenres();
-  const { results, total_pages } = await getMovies(Number(params?.page) || 1);
+  const { genres } = await getTvGenres();
+  const { results, total_pages } = await getTopRatedTvs(
+    Number(params?.page) || 1,
+  );
 
   let filtered = results;
 
@@ -20,26 +22,26 @@ const Discover = async ({
   const genreParams = urlParams.map((param) => parseInt(param));
 
   if (genreParams.length) {
-    filtered = [...results].filter((movie) =>
-      movie.genre_ids.some((genre) => genreParams.includes(genre)),
+    filtered = [...results].filter((tvShow) =>
+      tvShow.genre_ids.some((genre) => genreParams.includes(genre)),
     );
   }
 
   return (
     <section className="pt-12">
       <Container>
-        <GenreSorter genres={genres} pathname="/movies/discover" />
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((movie) => (
-            <Movie key={movie.id} movie={movie} />
+        <GenreSorter genres={genres} pathname="/tv-shows/top-rated" />
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+          {filtered.map((tvShow) => (
+            <TVShow key={tvShow.id} tvShow={tvShow} />
           ))}
         </div>
         <PaginationComponent
           total_pages={total_pages}
-          pathname="/movies/discover"
+          pathname="/tv-shows/top-rated"
         />
       </Container>
     </section>
   );
 };
-export default Discover;
+export default TopRated;

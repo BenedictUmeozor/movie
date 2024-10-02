@@ -13,6 +13,13 @@ export const getGenres = async (): Promise<{ genres: Genre[] }> => {
   return response.json();
 };
 
+export const getTvGenres = async (): Promise<{ genres: Genre[] }> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/genre/tv/list?api_key=${process.env.API_KEY}`,
+  );
+  return response.json();
+};
+
 export const getMovies = async (page: number = 1): Promise<MovieResponse> => {
   const response = await fetch(
     `${process.env.API_BASE_URL}/discover/movie?page=${page}&api_key=${process.env.API_KEY}`,
@@ -60,7 +67,7 @@ export const getTvShows = async (
   page: number = 1,
 ): Promise<TvShowApiResponse> => {
   const response = await fetch(
-    `https://api.themoviedb.org/3/tv/top_rated?page=${page}&api_key=${process.env.API_KEY}`,
+    `${process.env.API_BASE_URL}/discover/tv?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
   );
 
   return response.json();
@@ -93,4 +100,57 @@ export const getMovieArray = async (
   });
 
   return Promise.all(promises);
+};
+
+export const getTvArray = async (
+  tvShowIds: number[],
+): Promise<SingleTvShow[]> => {
+  const promises = tvShowIds.map(async (id) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/tv/${id}?append_to_response=credits&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
+    );
+    return response.json();
+  });
+
+  return Promise.all(promises);
+};
+
+export const getPopularTvs = async (
+  page: number = 1,
+): Promise<TvShowApiResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/tv/popular?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};
+
+export const getOnTheAirTvs = async (
+  page: number = 1,
+): Promise<TvShowApiResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/tv/on_the_air?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};
+
+export const getTopRatedTvs = async (
+  page: number = 1,
+): Promise<TvShowApiResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/tv/top_rated?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};
+
+export const getAiringTodayTvs = async (
+  page: number = 1,
+): Promise<TvShowApiResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/tv/airing_today?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
 };

@@ -31,7 +31,7 @@ const Upcoming = async ({
     <section className="pt-12">
       <Container>
         <GenreSorter genres={genres} pathname="/movies/upcoming" />
-        <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
           {filtered.map((movie) => (
             <Movie key={movie.id} movie={movie} />
           ))}

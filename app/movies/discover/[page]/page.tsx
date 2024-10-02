@@ -1,9 +1,9 @@
-import Discover from "@/components/discover/discover";
+import Discover from "@/components/discover/movie";
 import Hero from "@/components/shared/hero";
 import { getGenres, getMovies } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
- return []
+  return [];
 };
 
 export default async function Page({
