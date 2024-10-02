@@ -154,3 +154,31 @@ export const getAiringTodayTvs = async (
 
   return response.json();
 };
+
+export const getSearchMovieResults = async ({
+  query,
+  page = 1,
+}: {
+  query: string;
+  page?: number;
+}): Promise<MovieResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/search/movie?query=${query}&page=${page}&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};
+
+export const getSearchTvResults = async ({
+  query,
+  page = 1,
+}: {
+  query: string;
+  page?: number;
+}): Promise<TvShowApiResponse> => {
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/search/tv?query=${query}&page=${page}&api_key=${process.env.API_KEY}`,
+  );
+
+  return response.json();
+};

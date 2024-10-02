@@ -49,9 +49,9 @@ const PaginationComponent = ({
           <PaginationLink
             href={newUrl}
             className={clsx(
-              "bg-secondary-blue text-white hover:bg-primary-blue hover:text-white",
+              "border border-primary-blue bg-transparent text-primary-blue hover:bg-primary-blue hover:text-white",
               {
-                "bg-primary-blue":
+                "bg-primary-blue text-white":
                   pageNumber === page || (!pageNumber && page === 1),
               },
             )}
@@ -89,6 +89,10 @@ const PaginationComponent = ({
       : `${pathname}/${newPageNumber}`;
   };
 
+  if (total_pages < 2) {
+    return null;
+  }
+
   return (
     <div className="mt-8 grid place-items-center">
       <Pagination>
@@ -97,9 +101,9 @@ const PaginationComponent = ({
             <PaginationPrevious
               href={previousPageUrl()}
               className={clsx(
-                "bg-secondary-blue text-white hover:bg-primary-blue hover:text-white",
+                "border border-primary-blue bg-transparent text-primary-blue hover:bg-primary-blue hover:text-white",
                 {
-                  "bg-primary-blue": pageNumber === 1 || !pageNumber,
+                  "bg-primary-blue text-white": pageNumber === 1 || !pageNumber,
                 },
               )}
             />
@@ -109,9 +113,9 @@ const PaginationComponent = ({
             <PaginationNext
               href={nextPageUrl()}
               className={clsx(
-                "bg-secondary-blue text-white hover:bg-primary-blue hover:text-white",
+                "border border-primary-blue bg-transparent text-primary-blue hover:bg-primary-blue hover:text-white",
                 {
-                  "bg-primary-blue": pageNumber === total_pages,
+                  "bg-primary-blue text-white": pageNumber === total_pages,
                 },
               )}
             />
