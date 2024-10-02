@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   title: "Movie Empire",
 };
 
+export const revalidate = 3600;
+
 export default function RootLayout({
   children,
 }: Readonly<{
