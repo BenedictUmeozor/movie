@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
-import "./globals.css";
-import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
+import "../globals.css";
+import { CSSProperties } from "react";
+import movie_bg from "@/assets/movie_bg.jpg";
+
+const style: CSSProperties = {
+  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('${movie_bg.src}')`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 const lato = Lato({
   subsets: ["latin"],
@@ -24,10 +31,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lato.className} bg-dark-gray text-white antialiased`}>
-        <Header />
         <NextTopLoader showSpinner={false} />
-        {children}
-        <Footer />
+        <main style={style} className="grid min-h-screen place-items-center">
+          {children}
+        </main>
       </body>
     </html>
   );

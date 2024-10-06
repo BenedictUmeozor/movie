@@ -2,7 +2,7 @@ import Link from "next/link";
 import Container from "./container";
 import { Button } from "./button";
 import { ChevronDown, Menu, Video } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SearchBar from "./search-bar";
 
 const Header = () => {
@@ -22,14 +22,20 @@ const Header = () => {
         <div className="flex flex-1 items-center justify-end gap-2">
           <Button
             variant={"ghost"}
-            className="flex items-center gap-2 max-md:hidden"
+            className="flex items-center gap-2 text-base hover:bg-transparent hover:text-white max-md:hidden"
           >
-            Genres <ChevronDown size={16} />
+            Lists <ChevronDown size={16} />
           </Button>
-          <Avatar className="max-md:hidden">
+          {/* <Avatar className="max-md:hidden">
             <AvatarImage src="" />
             <AvatarFallback className="text-black">BU</AvatarFallback>
-          </Avatar>
+          </Avatar> */}
+          <Link
+            href="/login"
+            className="hidden h-9 items-center justify-center rounded bg-primary-blue px-4 text-white hover:bg-blue-900 md:inline-flex"
+          >
+            Login
+          </Link>
           <Button variant={"ghost"} size={"icon"} className="md:hidden">
             <Menu size={24} />
           </Button>
