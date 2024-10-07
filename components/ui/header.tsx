@@ -19,22 +19,22 @@ const Header = () => {
         <div className="flex-[2] max-md:flex-[3]">
           <SearchBar />
         </div>
-        <div className="flex flex-1 items-center justify-end gap-2">
-          <Button
-            variant={"ghost"}
-            className="flex items-center gap-2 text-base hover:bg-transparent hover:text-white max-md:hidden"
+        <div className="flex flex-1 items-center justify-end gap-3">
+          <Link
+            href="/lists"
+            className="text-basemax-md:hidden flex items-center gap-2"
           >
             Lists <ChevronDown size={16} />
-          </Button>
+          </Link>
           {/* <Avatar className="max-md:hidden">
             <AvatarImage src="" />
             <AvatarFallback className="text-black">BU</AvatarFallback>
           </Avatar> */}
           <Link
-            href="/login"
+            href="/sign-in"
             className="hidden h-9 items-center justify-center rounded bg-primary-blue px-4 text-white hover:bg-blue-900 md:inline-flex"
           >
-            Login
+            Sign in
           </Link>
           <Button variant={"ghost"} size={"icon"} className="md:hidden">
             <Menu size={24} />

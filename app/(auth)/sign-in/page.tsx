@@ -1,4 +1,4 @@
-import SignupForm from "@/components/auth/sign-up/form";
+import SigninForm from "@/components/auth/sign-in/form";
 import { Video } from "lucide-react";
 import Link from "next/link";
 
@@ -13,11 +13,9 @@ export default function Page() {
           <Video size={28} fill="#1475E6" stroke="#1475E6" />
           <span>Movie Empire</span>
         </Link>
-        <p className="w-full text-center text-medium-white">
-          Fill in the information to create an account
-        </p>
+        <p className="w-full text-center text-medium-white">Welcome back!</p>
       </header>
-      <SignupForm />
+      <SigninForm />
     </div>
   );
 }

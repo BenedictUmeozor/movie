@@ -10,6 +10,7 @@ const style: CSSProperties = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
+  backgroundAttachment: "fixed",
 };
 
 const lato = Lato({
@@ -32,7 +33,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.className} bg-dark-gray text-white antialiased`}>
         <NextTopLoader showSpinner={false} />
-        <main style={style} className="grid min-h-screen place-items-center">
+        <main
+          style={style}
+          className="grid min-h-screen place-items-center py-8"
+        >
           {children}
         </main>
       </body>
