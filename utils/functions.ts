@@ -1,3 +1,5 @@
+import { v4 as uuidV4 } from "uuid";
+
 type RatingColorClass =
   | "bg-teal-500"
   | "bg-green-500"
@@ -28,6 +30,12 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 
   return shuffledArray;
 };
+
+export function generateTimeBasedId(): string {
+  const timestamp = new Date().getTime().toString(36); // Convert timestamp to base36
+  const randomPart = uuidV4().split("-")[0]; // Take the first part of a UUID
+  return `${timestamp}-${randomPart}`;
+}
 
 export function formatNumberWithCommas(number: number): string {
   return number.toLocaleString("en-US");

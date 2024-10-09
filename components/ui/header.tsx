@@ -4,6 +4,7 @@ import { Button } from "./button";
 import { ChevronDown, Menu, Video } from "lucide-react";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SearchBar from "./search-bar";
+import AccountDropdown from "./account-dropdown";
 
 const Header = () => {
   return (
@@ -26,16 +27,13 @@ const Header = () => {
           >
             Lists <ChevronDown size={16} />
           </Link>
-          {/* <Avatar className="max-md:hidden">
-            <AvatarImage src="" />
-            <AvatarFallback className="text-black">BU</AvatarFallback>
-          </Avatar> */}
-          <Link
+          <AccountDropdown />
+          {/* <Link
             href="/sign-in"
             className="hidden h-9 items-center justify-center rounded bg-primary-blue px-4 text-white hover:bg-blue-900 md:inline-flex"
           >
             Sign in
-          </Link>
+          </Link> */}
           <Button variant={"ghost"} size={"icon"} className="md:hidden">
             <Menu size={24} />
           </Button>
