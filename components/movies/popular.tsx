@@ -16,7 +16,7 @@ const Popular = async () => {
       <Container>
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold max-md:text-xl">Popular</h2>
-          <Button size={"icon"} className="bg-primary-blue hover:bg-blue-900">
+          <Button size={"icon"} className="bg-primary-blue hover:bg-blue-900" asChild>
             <Link href="/movies/popular">
               <ChevronRight size={20} />
             </Link>
