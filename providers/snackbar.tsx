@@ -1,9 +1,11 @@
 "use client";
 
 import { SnackbarProvider } from "notistack";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
-const NotistackProvider = ({ children }: { children: ReactNode }) => {
+const NotistackProvider = memo(({ children }: { children: ReactNode }) => {
   return <SnackbarProvider maxSnack={3}>{children}</SnackbarProvider>;
-};
+});
+
+NotistackProvider.displayName = "NotistackProvider";
 export default NotistackProvider;

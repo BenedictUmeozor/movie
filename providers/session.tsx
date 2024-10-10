@@ -1,7 +1,7 @@
 "use client";
 
 import { validateRequest } from "@/lib/auth";
-import { createContext, PropsWithChildren, useContext } from "react";
+import { createContext, memo, PropsWithChildren, useContext } from "react";
 
 type Context = Awaited<ReturnType<typeof validateRequest>>;
 
@@ -14,11 +14,14 @@ export const useSession = () => {
   return useContext(sessionContext);
 };
 
-export const SessionProvider = ({
-  children,
-  value,
-}: PropsWithChildren<{ value: Context }>) => {
-  return (
-    <sessionContext.Provider value={value}>{children}</sessionContext.Provider>
-  );
-};
+export const SessionProvider = memo(
+  ({ children, value }: PropsWithChildren<{ value: Context }>) => {
+    return (
+      <sessionContext.Provider value={value}>
+        {children}
+      </sessionContext.Provider>
+    );
+  },
+);
+
+SessionProvider.displayName = "SessionProvider";

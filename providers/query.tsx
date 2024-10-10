@@ -8,7 +8,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -38,7 +38,7 @@ export function getQueryClient() {
   }
 }
 
-export default function QueryProvider({ children }: { children: ReactNode }) {
+const QueryProvider = memo(({ children }: { children: ReactNode }) => {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
   //       suspend because React will throw away the client on the initial
@@ -50,4 +50,7 @@ export default function QueryProvider({ children }: { children: ReactNode }) {
       <ReactQueryStreamedHydration>{children}</ReactQueryStreamedHydration>
     </QueryClientProvider>
   );
-}
+});
+
+QueryProvider.displayName = "QueryProvider";
+export default QueryProvider;

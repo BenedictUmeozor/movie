@@ -6,8 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./badge";
 import clsx from "clsx";
+import { useSession } from "@/providers/session";
+import AddToListButton from "../shared/list-button";
+import { memo } from "react";
 
-const Movie = ({ movie }: { movie: MovieInterface }) => {
+const Movie = memo(({ movie }: { movie: MovieInterface }) => {
+  const { session } = useSession();
+
   return (
     <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
       <Link href={`/movie/${movie.id}`} className="relative mx-auto">
@@ -52,11 +57,23 @@ const Movie = ({ movie }: { movie: MovieInterface }) => {
         <Link href={`/movie/${movie.id}`} className="text-sm font-semibold">
           {movie.title}
         </Link>
-        <p className="text-sm text-light-white">
-          {formatDate(movie.release_date)}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-light-white">
+            {formatDate(movie.release_date)}
+          </p>
+          {!!session && (
+            <AddToListButton
+              mediaType="movie"
+              posterPath={movie.poster_path}
+              title={movie.title}
+              tmdbId={movie.id}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
-};
+});
+
+Movie.displayName = "Movie";
 export default Movie;

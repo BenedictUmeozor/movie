@@ -29,6 +29,7 @@ const AccountDropdown = () => {
       return success;
     },
     onSuccess: () => {
+      alertMessage("You are logged out", "success");
       setOpen(false);
     },
     onError: (error) => {

@@ -1,7 +1,8 @@
 "use server";
 
 import { validateRequest } from "@/lib/auth";
-import List from "@/lib/models/list";
+import connectDB from "@/lib/db";
+import List, { IListItem } from "@/lib/models/list";
 import User from "@/lib/models/user";
 import { listSchema } from "@/lib/zod";
 import { ActionResponse } from "@/types/globals";
@@ -24,6 +25,7 @@ export const createList = async ({
   }
 
   try {
+    await connectDB();
     const exists = await List.exists({ name });
     if (exists) throw new Error("List already exists");
 
@@ -44,6 +46,49 @@ export const createList = async ({
     );
 
     if (!user) throw new Error("User not found");
+
+    revalidatePath("/my-lists");
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Something went wrong",
+    };
+  }
+};
+
+export const addToList = async ({
+  mediaType,
+  posterPath,
+  title,
+  tmdbId,
+  listId,
+}: IListItem & { listId: string }): Promise<ActionResponse> => {
+  const { session } = await validateRequest();
+
+  if (!session) {
+    redirect("/sign-in");
+  }
+
+  try {
+    await connectDB();
+
+    const item: IListItem = {
+      mediaType,
+      posterPath,
+      title,
+      tmdbId,
+    };
+
+    const list = await List.findById(listId);
+
+    if (!list) throw new Error("List not found");
+
+    const exists = list.items.some((item) => item.tmdbId === tmdbId);
+    if (exists) throw new Error("Item already exists in list");
+
+    list.items.push(item);
+    await list.save();
 
     revalidatePath("/my-lists");
     return { success: true };
