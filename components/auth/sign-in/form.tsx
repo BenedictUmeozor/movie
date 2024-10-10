@@ -18,16 +18,45 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleButton from "../shared/google-button";
 import Link from "next/link";
+import useMessage from "@/hooks/message";
+import { useMutation } from "@tanstack/react-query";
+import { signin } from "@/server/mutations/auth";
+import { useRouter } from "nextjs-toploader/app";
+import { TailwindSpinner } from "@/components/ui/spinner";
 
 type FormSchema = z.infer<typeof loginSchema>;
 
 const SigninForm = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { alertMessage } = useMessage();
+  const router = useRouter();
+
+  const mutation = useMutation({
+    mutationKey: ["sign-in"],
+    mutationFn: async (values: FormSchema) => {
+      const { success, error } = await signin(values);
+      if (error) throw new Error(error);
+      return success;
+    },
+    onSuccess: () => {
+      form.reset();
+      alertMessage("Login successful", "success");
+      router.replace("/");
+    },
+    onError: (error) => {
+      alertMessage(error.message, "error");
+    },
   });
 
   const onSubmit = (values: FormSchema) => {
-    console.log(values);
+    mutation.mutate(values);
   };
 
   return (
@@ -78,7 +107,7 @@ const SigninForm = () => {
               "h-12 w-full bg-primary-blue text-white hover:bg-blue-900",
             )}
           >
-            Submit
+            {mutation.isPending ? <TailwindSpinner /> : "Submit"}
           </Button>
         </form>
         <div className="flex items-center justify-center gap-4 overflow-hidden">

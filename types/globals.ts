@@ -1,3 +1,8 @@
+export interface ActionResponse {
+  success: boolean;
+  error?: string;
+}
+
 export interface Genre {
   id: number;
   name: string;

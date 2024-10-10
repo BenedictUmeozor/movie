@@ -24,15 +24,16 @@ const AccountDropdown = () => {
   const mutation = useMutation({
     mutationKey: ["logout"],
     mutationFn: async () => {
-      const response = await signout();
-      return response;
+      const { success, error } = await signout();
+      if (error) throw new Error(error);
+      return success;
     },
     onSuccess: () => {
       setOpen(false);
     },
     onError: (error) => {
       console.log(error);
-      alertMessage(error.message || "something went wrong", "error");
+      alertMessage(error.message, "error");
     },
   });
 

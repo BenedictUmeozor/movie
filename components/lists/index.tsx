@@ -2,7 +2,7 @@
 
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import EditList from "./edit";
+import EditList from "../account/my-lists/edit";
 // import { Separator } from "@/components/ui/separator";
 
 const ListPage = () => {

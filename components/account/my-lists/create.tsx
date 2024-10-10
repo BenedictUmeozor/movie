@@ -25,21 +25,47 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
+import useMessage from "@/hooks/message";
+import { useMutation } from "@tanstack/react-query";
+import { createList } from "@/server/mutations/list";
+import { TailwindSpinner } from "@/components/ui/spinner";
 
 type FormSchema = z.infer<typeof listSchema>;
 
 const CreateList = () => {
+  const [open, setOpen] = useState(false);
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(listSchema),
     defaultValues: {
       name: "",
       description: "",
-      private: false,
+      isPrivate: false,
+    },
+  });
+
+  const { alertMessage } = useMessage();
+
+  const mutation = useMutation({
+    mutationKey: ["create-list"],
+    mutationFn: async (values: FormSchema) => {
+      const { success, error } = await createList(values);
+      if (error) throw new Error(error);
+      return success;
+    },
+    onSuccess: () => {
+      form.reset();
+      setOpen(false);
+      alertMessage("List created", "success");
+    },
+    onError: (error) => {
+      alertMessage(error.message, "error");
     },
   });
 
   const onSubmit = (values: FormSchema) => {
-    console.log(values);
+    mutation.mutate(values);
   };
 
   return (
@@ -47,7 +73,7 @@ const CreateList = () => {
       <h2 className="text-4xl font-bold max-lg:text-3xl max-md:text-2xl">
         My Lists
       </h2>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
             className={cn(
@@ -77,7 +103,9 @@ const CreateList = () => {
                         <Input
                           {...field}
                           placeholder="My List"
-                          className={cn("h-11 focus-visible:ring-primary-blue")}
+                          className={cn(
+                            "h-11 text-white focus-visible:ring-primary-blue",
+                          )}
                         />
                       </FormControl>
                       <FormMessage />
@@ -89,14 +117,14 @@ const CreateList = () => {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
                           placeholder="List description"
                           rows={8}
                           className={cn(
-                            "h-11 resize-none focus-visible:ring-primary-blue",
+                            "h-11 resize-none text-white focus-visible:ring-primary-blue",
                           )}
                         ></Textarea>
                       </FormControl>
@@ -106,7 +134,7 @@ const CreateList = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="private"
+                  name="isPrivate"
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center justify-between">
@@ -127,8 +155,11 @@ const CreateList = () => {
                   )}
                 />
                 <div className="flex items-center justify-end">
-                  <Button className={cn("bg-primary-blue hover:bg-blue-900")}>
-                    Create
+                  <Button
+                    disabled={mutation.isPending}
+                    className={cn("bg-primary-blue hover:bg-blue-900")}
+                  >
+                    {mutation.isPending ? <TailwindSpinner /> : "Create"}
                   </Button>
                 </div>
               </form>

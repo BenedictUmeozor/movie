@@ -3,7 +3,7 @@ import { z } from "zod";
 export const listSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   description: z.string().min(1, { message: "Description is required" }),
-  private: z.boolean(),
+  isPrivate: z.boolean(),
 });
 
 export const loginSchema = z.object({

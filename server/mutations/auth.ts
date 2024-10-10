@@ -10,11 +10,7 @@ import List from "@/lib/models/list";
 import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-interface ActionResponse {
-  success: boolean;
-  error?: string;
-}
+import { ActionResponse } from "@/types/globals";
 
 type SignupSchema = z.infer<typeof signupSchema>;
 type SigninSchema = z.infer<typeof loginSchema>;

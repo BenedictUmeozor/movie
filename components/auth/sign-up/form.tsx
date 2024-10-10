@@ -29,6 +29,11 @@ type FormSchema = z.infer<typeof signupSchema>;
 const SignupForm = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: "",
+      fullName: "",
+      password: "",
+    },
   });
 
   const router = useRouter();
@@ -38,8 +43,9 @@ const SignupForm = () => {
   const mutation = useMutation({
     mutationKey: ["sign-up"],
     mutationFn: async (values: FormSchema) => {
-      const response = await signup(values);
-      return response;
+      const { success, error } = await signup(values);
+      if (error) throw new Error(error);
+      return success;
     },
     onSuccess: () => {
       form.reset();
@@ -47,8 +53,7 @@ const SignupForm = () => {
       router.replace("/");
     },
     onError: (error) => {
-      console.log(error);
-      alertMessage(error.message || "something went wrong", "error");
+      alertMessage(error.message, "error");
     },
   });
 

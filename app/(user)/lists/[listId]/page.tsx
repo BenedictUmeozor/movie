@@ -1,4 +1,4 @@
-import ListPage from "@/components/account/my-lists/list-page";
+import ListPage from "@/components/lists";
 import Container from "@/components/ui/container";
 
 export default function Page() {
