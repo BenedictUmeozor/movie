@@ -30,11 +30,14 @@ import useMessage from "@/hooks/message";
 import { useMutation } from "@tanstack/react-query";
 import { createList } from "@/server/mutations/list";
 import { TailwindSpinner } from "@/components/ui/spinner";
+import { getQueryClient } from "@/providers/query";
 
 type FormSchema = z.infer<typeof listSchema>;
 
 const CreateList = () => {
   const [open, setOpen] = useState(false);
+
+  const queryClient = getQueryClient();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(listSchema),
@@ -57,6 +60,7 @@ const CreateList = () => {
     onSuccess: () => {
       form.reset();
       setOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["user-lists"] });
       alertMessage("List created", "success");
     },
     onError: (error) => {
