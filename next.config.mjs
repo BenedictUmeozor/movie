@@ -13,8 +13,10 @@ const nextConfig = {
       },
     ],
   },
+
   webpack: (config) => {
     config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
+    config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;
   },
 };
