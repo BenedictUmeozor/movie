@@ -116,7 +116,7 @@ export const signin = async (data: SigninSchema): Promise<ActionResponse> => {
   }
 };
 
-export const logout = async (): Promise<ActionResponse> => {
+export const signout = async (): Promise<ActionResponse> => {
   const { session } = await validateRequest();
   if (!session) return { success: false, error: "Unauthorized" };
 

@@ -18,6 +18,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleButton from "../shared/google-button";
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { signup } from "@/server/mutations/auth";
+import { useRouter } from "nextjs-toploader/app";
+import useMessage from "@/hooks/message";
+import { TailwindSpinner } from "@/components/ui/spinner";
 
 type FormSchema = z.infer<typeof signupSchema>;
 
@@ -26,8 +31,29 @@ const SignupForm = () => {
     resolver: zodResolver(signupSchema),
   });
 
+  const router = useRouter();
+
+  const { alertMessage } = useMessage();
+
+  const mutation = useMutation({
+    mutationKey: ["sign-up"],
+    mutationFn: async (values: FormSchema) => {
+      const response = await signup(values);
+      return response;
+    },
+    onSuccess: () => {
+      form.reset();
+      alertMessage("Account created successfully", "success");
+      router.replace("/");
+    },
+    onError: (error) => {
+      console.log(error);
+      alertMessage(error.message || "something went wrong", "error");
+    },
+  });
+
   const onSubmit = (values: FormSchema) => {
-    console.log(values);
+    mutation.mutate(values);
   };
 
   return (
@@ -91,11 +117,12 @@ const SignupForm = () => {
           <Button
             type="submit"
             variant="default"
+            disabled={mutation.isPending}
             className={cn(
               "h-12 w-full bg-primary-blue text-white hover:bg-blue-900",
             )}
           >
-            Submit
+            {mutation.isPending ? <TailwindSpinner /> : "Submit"}
           </Button>
         </form>
         <div className="flex items-center justify-center gap-4 overflow-hidden">

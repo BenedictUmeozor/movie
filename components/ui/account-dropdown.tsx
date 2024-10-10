@@ -9,11 +9,35 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useMessage from "@/hooks/message";
+import { signout } from "@/server/mutations/auth";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useState } from "react";
+import { TailwindSpinner } from "./spinner";
 
 const AccountDropdown = () => {
+  const [open, setOpen] = useState(false);
+
+  const { alertMessage } = useMessage();
+
+  const mutation = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => {
+      const response = await signout();
+      return response;
+    },
+    onSuccess: () => {
+      setOpen(false);
+    },
+    onError: (error) => {
+      console.log(error);
+      alertMessage(error.message || "something went wrong", "error");
+    },
+  });
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer max-md:hidden">
           <AvatarImage src="" />
@@ -26,7 +50,12 @@ const AccountDropdown = () => {
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link href={"/my-lists"}>My lists</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">Logout</DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => mutation.mutate()}
+        >
+          {mutation.isPending ? <TailwindSpinner /> : "Logout"}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

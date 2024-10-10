@@ -7,6 +7,7 @@ import Footer from "@/components/ui/footer";
 import { SessionProvider } from "@/providers/session";
 import { validateRequest } from "@/lib/auth";
 import QueryProvider from "@/providers/query";
+import NotistackProvider from "@/providers/snackbar";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -31,11 +32,13 @@ export default async function RootLayout({
       <body className={`${lato.className} bg-dark-gray text-white antialiased`}>
         <NextTopLoader showSpinner={false} />
         <SessionProvider value={session}>
-          <QueryProvider>
-            <Header />
-            {children}
-            <Footer />
-          </QueryProvider>
+          <NotistackProvider>
+            <QueryProvider>
+              <Header />
+              {children}
+              <Footer />
+            </QueryProvider>
+          </NotistackProvider>
         </SessionProvider>
       </body>
     </html>
