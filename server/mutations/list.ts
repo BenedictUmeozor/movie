@@ -99,3 +99,54 @@ export const addToList = async ({
     };
   }
 };
+
+export const updateList = async ({
+  description,
+  isPrivate,
+  listId,
+  name,
+}: FormSchema & { listId: string }): Promise<ActionResponse> => {
+  const { session } = await validateRequest();
+  if (!session) redirect("/sign-in");
+
+  try {
+    await connectDB();
+    const exists = await List.exists({ name, _id: { $ne: listId } });
+    if (exists) throw new Error("List already exists");
+    const updatedList = await List.findByIdAndUpdate(
+      listId,
+      {
+        name,
+        description,
+        isPrivate,
+      },
+      { new: true },
+    );
+    if (!updatedList) throw new Error("List not found");
+    revalidatePath("/my-lists");
+    revalidatePath("/my-lists/{listId}");
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Something went wrong",
+    };
+  }
+};
+
+export const deleteList = async (listId: string): Promise<ActionResponse> => {
+  const { session } = await validateRequest();
+  if (!session) redirect("/sign-in");
+  try {
+    await connectDB();
+    const deletedList = await List.findByIdAndDelete(listId);
+    if (!deletedList) throw new Error("List not found");
+    revalidatePath("/my-lists");
+    redirect("/my-lists");
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Something went wrong",
+    };
+  }
+};

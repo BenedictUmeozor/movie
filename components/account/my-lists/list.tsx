@@ -11,12 +11,16 @@ import { IList } from "@/lib/models/list";
 import { cn } from "@/lib/utils";
 import { Share2, Star, Globe, Lock, Bookmark } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const List = ({ list }: { list: IList }) => {
   const listImages = list.items.map((item) => item.posterPath);
 
   return (
-    <div className="space-y-2 rounded p-2 hover:bg-light-gray max-md:w-[80%] max-md:max-w-xs">
+    <Link
+      href={`/my-lists/${list._id}`}
+      className="block space-y-2 rounded p-2 hover:bg-light-gray max-md:mx-auto max-md:w-[90%] max-md:max-w-md"
+    >
       <StackedGallery images={listImages} />
       <div className="space-y-1">
         <div className="flex items-center justify-between">
@@ -28,13 +32,16 @@ export const List = ({ list }: { list: IList }) => {
           <PrivateOrPublic isPrivate={list.isPrivate} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 export const Saved = ({ list }: { list: IList }) => {
   return (
-    <div className="space-y-2 rounded p-2 hover:bg-light-gray max-md:w-[80%] max-md:max-w-xs">
+    <Link
+      href={`/my-lists/${list._id}`}
+      className="block space-y-2 rounded p-2 hover:bg-light-gray max-md:mx-auto max-md:w-[90%] max-md:max-w-md"
+    >
       <div className="flex aspect-[6/2.5] items-center justify-center rounded-md bg-pink-500">
         <div className="inline-flex items-center gap-2 text-lg font-medium">
           <Bookmark size={20} fill="white" /> Saved
@@ -50,13 +57,16 @@ export const Saved = ({ list }: { list: IList }) => {
           <PrivateOrPublic isPrivate={list.isPrivate} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
 export const Favorites = ({ list }: { list: IList }) => {
   return (
-    <div className="space-y-2 rounded p-2 hover:bg-light-gray max-md:w-[80%] max-md:max-w-xs">
+    <Link
+      href={`/my-lists/${list._id}`}
+      className="block space-y-2 rounded p-2 hover:bg-light-gray max-md:mx-auto max-md:w-[90%] max-md:max-w-md"
+    >
       <div className="flex aspect-[6/2.5] items-center justify-center rounded-md bg-blue-500">
         <div className="inline-flex items-center gap-2 text-lg font-medium">
           <Star size={20} fill="white" /> Favourites
@@ -72,11 +82,11 @@ export const Favorites = ({ list }: { list: IList }) => {
           <PrivateOrPublic isPrivate={list.isPrivate} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-const PrivateOrPublic = ({ isPrivate }: { isPrivate: boolean }) => {
+export const PrivateOrPublic = ({ isPrivate }: { isPrivate: boolean }) => {
   if (isPrivate) {
     return (
       <span className="inline-flex items-center gap-1">

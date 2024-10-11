@@ -3,6 +3,8 @@
 import mongoose from "mongoose";
 import User from "./models/user";
 import List from "./models/list";
+import Like from "./models/like";
+import Review from "./models/review";
 declare global {
   var mongoose: any; // This must be a `var` and not a `let / const`
 }
@@ -36,6 +38,14 @@ async function connectDB() {
 
       if (!mongoose.models.List) {
         mongoose.model("List", List.schema);
+      }
+
+      if (!mongoose.models.Like) {
+        mongoose.model("Like", Like.schema);
+      }
+
+      if (!mongoose.models.Review) {
+        mongoose.model("Review", Review.schema);
       }
 
       console.log("Connected to MongoDB!");
