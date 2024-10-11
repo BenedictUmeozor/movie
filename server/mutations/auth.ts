@@ -36,6 +36,7 @@ export const signup = async (data: SignupSchema): Promise<ActionResponse> => {
       email,
       fullName,
       password: hashedPassword,
+      username,
     });
 
     await user.save();
