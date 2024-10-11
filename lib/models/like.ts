@@ -5,8 +5,8 @@ import List from "./list";
 
 export interface ILike {
   _id: string;
+  user: string;
   review?: string;
-  user?: string;
   list?: string;
 }
 
@@ -14,7 +14,7 @@ const likeSchema = new mongoose.Schema(
   {
     _id: { type: String, required: true },
     review: { type: String, ref: "Review" },
-    user: { type: String, ref: "User" },
+    user: { type: String, ref: "User", required: true },
     list: { type: String, ref: "List" },
   } as const,
   { _id: false, timestamps: true },

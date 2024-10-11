@@ -1,4 +1,5 @@
 import movie_bg from "@/assets/movie_bg.jpg";
+import ListPage from "@/components/lists";
 import Container from "@/components/ui/container";
 import { CSSProperties } from "react";
 
@@ -7,7 +8,6 @@ const style: CSSProperties = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundAttachment: "fixed",
 };
 
 export default function Page() {
@@ -27,6 +27,7 @@ export default function Page() {
           </p>
         </Container>
       </section>
+      <ListPage />
     </main>
   );
 }

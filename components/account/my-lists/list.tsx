@@ -1,16 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import CopyButton from "@/components/shared/copy-button";
+import StackedGallery from "@/components/shared/list-image-gallery";
 import { IList } from "@/lib/models/list";
-import { cn } from "@/lib/utils";
-import { Share2, Star, Globe, Lock, Bookmark } from "lucide-react";
-import Image from "next/image";
+import { Star, Globe, Lock, Bookmark } from "lucide-react";
 import Link from "next/link";
 
 export const List = ({ list }: { list: IList }) => {
@@ -100,65 +93,5 @@ export const PrivateOrPublic = ({ isPrivate }: { isPrivate: boolean }) => {
       <Globe size={16} />
       Public
     </span>
-  );
-};
-
-const CopyButton = () => {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant={"ghost"} size={"icon"}>
-            <Share2 size={20} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Copy link</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-const StackedGallery = ({ images }: { images: string[] }) => {
-  const totalImages = images.length;
-  const maxOffset = 32; // maximum offset in pixels
-  const maxRotation = 5; // maximum rotation in degrees
-
-  return (
-    <div
-      className={cn(
-        "flex aspect-[6/2.5] items-center justify-center overflow-hidden rounded-md",
-        {
-          "bg-medium-gray": !!totalImages,
-          "bg-medium-white": totalImages === 0,
-        },
-      )}
-    >
-      {images.map((image, index) => {
-        const offset = (index / (totalImages - 1)) * maxOffset;
-        const rotation = ((index / (totalImages - 1)) * 2 - 1) * maxRotation;
-        const zIndex = totalImages - index;
-
-        return (
-          <div
-            key={`image-${index}`}
-            className="w-44"
-            style={{
-              top: `${offset}px`,
-              left: `${offset}px`,
-              zIndex: zIndex,
-              transform: `rotate(${rotation}deg)`,
-            }}
-          >
-            <Image
-              src={process.env.NEXT_PUBLIC_IMG_URL + image}
-              alt={`Image ${index + 1}`}
-              height={400}
-              width={400}
-              className="aspect-[4/6] w-full object-cover"
-            />
-          </div>
-        );
-      })}
-    </div>
   );
 };
