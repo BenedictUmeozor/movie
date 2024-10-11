@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import User from "./user";
+import Like from "./like";
 
 export interface IListItem {
   tmdbId: number;
@@ -15,7 +17,7 @@ export interface IList {
   isPrivate: boolean;
   isFavourite: boolean;
   isSaved: boolean;
-  userId: string;
+  user: string;
   likes: string[];
 }
 
@@ -35,11 +37,47 @@ const listSchema = new mongoose.Schema<IList>(
     isPrivate: { type: Boolean, required: true, default: false },
     isFavourite: { type: Boolean, required: true, default: false },
     isSaved: { type: Boolean, required: true, default: false },
-    userId: { type: String, ref: "User" },
+    user: { type: String, ref: "User" },
     likes: [{ type: String, ref: "Like" }],
   } as const,
   { timestamps: true, _id: false },
 );
+
+listSchema.post("save", async (document: IList) => {
+  try {
+    const listId = document._id;
+    const userId = document.user;
+
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        $addToSet: { lists: listId },
+      },
+      { new: true },
+    );
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+});
+
+listSchema.post("findOneAndDelete", async (document: IList) => {
+  try {
+    const listId = document._id;
+
+    await User.updateOne(
+      { lists: listId },
+      {
+        $pull: { lists: listId },
+      },
+    );
+
+    await Like.deleteMany({ list: listId });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+});
 
 const List =
   (mongoose.models.List as mongoose.Model<IList>) ||

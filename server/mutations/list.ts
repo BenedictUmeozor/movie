@@ -3,7 +3,6 @@
 import { validateRequest } from "@/lib/auth";
 import connectDB from "@/lib/db";
 import List, { IListItem } from "@/lib/models/list";
-import User from "@/lib/models/user";
 import { listSchema } from "@/lib/zod";
 import { ActionResponse } from "@/types/globals";
 import { generateTimeBasedId } from "@/utils/functions";
@@ -29,23 +28,15 @@ export const createList = async ({
     const exists = await List.exists({ name });
     if (exists) throw new Error("List already exists");
 
-    const list = await List.create({
+    const list = new List({
       _id: generateTimeBasedId(),
       name,
       description,
       isPrivate,
-      userId: session.userId,
+      user: session.userId,
     });
 
-    const user = await User.findByIdAndUpdate(
-      session.userId,
-      {
-        $push: { lists: list._id },
-      },
-      { new: true },
-    );
-
-    if (!user) throw new Error("User not found");
+    await list.save();
 
     revalidatePath("/my-lists");
     return { success: true };
@@ -139,7 +130,7 @@ export const deleteList = async (listId: string): Promise<ActionResponse> => {
   if (!session) redirect("/sign-in");
   try {
     await connectDB();
-    const deletedList = await List.findByIdAndDelete(listId);
+    const deletedList = await List.findOneAndDelete({ _id: listId });
     if (!deletedList) throw new Error("List not found");
     revalidatePath("/my-lists");
     redirect("/my-lists");

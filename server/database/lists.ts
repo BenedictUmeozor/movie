@@ -16,7 +16,7 @@ export const getUserLists = async () => {
   try {
     await connectDB();
 
-    const lists = await List.find({ userId: session.userId }).lean();
+    const lists = await List.find({ user: session.userId }).lean();
     return lists as IList[];
   } catch (error) {
     console.log(error);
@@ -29,7 +29,7 @@ export const getParticularList = async (listId: string) => {
     await connectDB();
     const list = await List.findById(listId)
       .populate({
-        path: "userId",
+        path: "user",
         select: "-password -createdAt -updatedAt -__v",
       })
       .lean();

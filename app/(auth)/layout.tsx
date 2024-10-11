@@ -6,9 +6,8 @@ import { CSSProperties } from "react";
 import movie_bg from "@/assets/movie_bg.jpg";
 import { validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import QueryProvider, { getQueryClient } from "@/providers/query";
+import QueryProvider from "@/providers/query";
 import NotistackProvider from "@/providers/snackbar";
-import { listOptions } from "@/lib/queries";
 
 const style: CSSProperties = {
   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('${movie_bg.src}')`,
@@ -39,10 +38,6 @@ export default async function RootLayout({
   if (session) {
     redirect("/");
   }
-
-  const queryClient = getQueryClient();
-
-  queryClient.prefetchQuery(listOptions());
 
   return (
     <html lang="en">

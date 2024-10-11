@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import User from "./user";
+import Like from "./like";
 
 export interface IReview {
   _id: string;
@@ -32,6 +34,40 @@ const reviewSchema = new mongoose.Schema<IReview>(
   } as const,
   { _id: false, timestamps: true },
 );
+
+reviewSchema.post("save", async (document: IReview) => {
+  try {
+    const reviewId = document._id;
+    const userId = document.user;
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: { reviews: reviewId },
+      },
+    );
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+});
+
+reviewSchema.post("findOneAndDelete", async (document: IReview) => {
+  try {
+    const reviewId = document._id;
+
+    await Like.deleteMany({ review: reviewId });
+    await User.updateMany(
+      { reviews: reviewId },
+      {
+        $pull: { reviews: reviewId },
+      },
+    );
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+});
 
 const Review =
   (mongoose.models.Review as mongoose.Model<IReview>) ||

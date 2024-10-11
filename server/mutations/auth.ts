@@ -6,7 +6,6 @@ import { loginSchema, signupSchema } from "@/lib/zod";
 import { generateTimeBasedId } from "@/utils/functions";
 import { z } from "zod";
 import { Argon2id } from "oslo/password";
-import List from "@/lib/models/list";
 import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -36,30 +35,7 @@ export const signup = async (data: SignupSchema): Promise<ActionResponse> => {
       password: hashedPassword,
     });
 
-    const lists = [
-      new List({
-        _id: generateTimeBasedId(),
-        name: "Favourites",
-        description: "My favourite movies and TV shows",
-        isPrivate: true,
-        isFavourite: true,
-        isSaved: false,
-        userId: user._id,
-      }),
-      new List({
-        _id: generateTimeBasedId(),
-        name: "Saved",
-        description: "My saved movies and TV shows",
-        isPrivate: true,
-        isFavourite: false,
-        isSaved: true,
-        userId: user._id,
-      }),
-    ];
-
-    user.lists = lists.map((list) => list._id);
-
-    await Promise.all([user.save(), ...lists.map((list) => list.save())]);
+    await user.save();
 
     const session = await lucia.createSession(user._id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
