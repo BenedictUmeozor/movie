@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ListAction from "./list-action";
 
-const ListItem = ({ item }: { item: IListItem }) => {
+const ListItem = ({ item, listId }: { item: IListItem; listId: string }) => {
   const link =
     item.mediaType === "tv-show"
       ? `/tv-show/${item.tmdbId}`
@@ -27,7 +27,7 @@ const ListItem = ({ item }: { item: IListItem }) => {
         </Link>
         <div className="flex items-center justify-between">
           <p className="text-sm text-light-white">{type}</p>
-          <ListAction />
+          <ListAction item={item} listId={listId} />
         </div>
       </div>
     </div>

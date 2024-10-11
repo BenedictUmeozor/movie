@@ -20,6 +20,7 @@ import {
   AVATAR_FALLBACK_STYLE,
   DROPDOWN_CONTENT_STYLE,
   DROPDOWN_ITEM_STYLE,
+  DROPDOWN_SEPARATOR_STYLE,
 } from "@/lib/constants";
 
 const AccountDropdown = () => {
@@ -56,7 +57,7 @@ const AccountDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn(DROPDOWN_CONTENT_STYLE, "mr-8")}>
         <DropdownMenuLabel>Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className={cn(DROPDOWN_SEPARATOR_STYLE)} />
         <DropdownMenuItem
           asChild
           className={cn(DROPDOWN_ITEM_STYLE, "cursor-pointer")}

@@ -21,7 +21,7 @@ export const List = ({ list }: { list: IList }) => {
       href={`/my-lists/${list._id}`}
       className="block space-y-2 rounded p-2 hover:bg-light-gray max-md:mx-auto max-md:w-[90%] max-md:max-w-md"
     >
-      <StackedGallery images={listImages} />
+      <StackedGallery images={listImages.slice(0, 4)} />
       <div className="space-y-1">
         <div className="flex items-center justify-between">
           <p>{list.name}</p>
@@ -154,7 +154,7 @@ const StackedGallery = ({ images }: { images: string[] }) => {
               alt={`Image ${index + 1}`}
               height={400}
               width={400}
-              className="aspect-[5/6] w-full object-cover"
+              className="aspect-[4/6] w-full object-cover"
             />
           </div>
         );

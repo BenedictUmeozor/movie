@@ -45,12 +45,18 @@ const ListPage = async ({ listId }: { listId: string }) => {
       </div>
       <EditList className="md:hidden" btnWidth="w-full" list={list} />
       <Separator />
-      <RenderList items={list.items} />
+      <RenderList items={list.items} listId={list._id} />
     </div>
   );
 };
 
-const RenderList = ({ items }: { items: IListItem[] }) => {
+const RenderList = ({
+  items,
+  listId,
+}: {
+  items: IListItem[];
+  listId: string;
+}) => {
   if (items.length === 0) {
     return <p className="my-12 text-center text-medium-white">List is empty</p>;
   }
@@ -61,7 +67,7 @@ const RenderList = ({ items }: { items: IListItem[] }) => {
       </p>
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
         {items.map((item) => (
-          <ListItem key={item.tmdbId} item={item} />
+          <ListItem key={item.tmdbId} item={item} listId={listId} />
         ))}
       </div>
     </Fragment>

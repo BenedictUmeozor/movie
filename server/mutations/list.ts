@@ -91,6 +91,89 @@ export const addToList = async ({
   }
 };
 
+export const changeList = async ({
+  fromListId,
+  mediaType,
+  posterPath,
+  title,
+  tmdbId,
+  toListId,
+}: {
+  fromListId: string;
+  toListId: string;
+} & IListItem): Promise<ActionResponse> => {
+  const { session } = await validateRequest();
+  if (!session) redirect("/sign-in");
+
+  try {
+    await connectDB();
+    const item: IListItem = {
+      mediaType,
+      posterPath,
+      title,
+      tmdbId,
+    };
+
+    const list = await List.findById(toListId);
+
+    if (!list) throw new Error("Target list not found");
+
+    const exists = list.items.some((item) => item.tmdbId === tmdbId);
+    if (exists) throw new Error("Item already exists in list");
+
+    const result = await List.updateOne(
+      { _id: fromListId },
+      { $pull: { items: { tmdbId } } },
+    );
+
+    if (result.modifiedCount < 1) {
+      throw new Error("List not found");
+    }
+
+    list.items.push(item);
+    await list.save();
+
+    revalidatePath("/my-lists/{listId}", "page");
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Something went wrong",
+    };
+  }
+};
+
+export const deleteFromList = async ({
+  tmdbId,
+  listId,
+}: {
+  tmdbId: number;
+  listId: string;
+}): Promise<ActionResponse> => {
+  const { session } = await validateRequest();
+  if (!session) redirect("/sign-in");
+
+  try {
+    await connectDB();
+
+    const result = await List.updateOne(
+      { _id: listId },
+      { $pull: { items: { tmdbId } } },
+    );
+
+    if (result.modifiedCount < 1) {
+      throw new Error("List not found");
+    }
+    revalidatePath("/my-lists/{listId}", "page");
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Something went wrong",
+    };
+  }
+};
+
 export const updateList = async ({
   description,
   isPrivate,
@@ -115,7 +198,7 @@ export const updateList = async ({
     );
     if (!updatedList) throw new Error("List not found");
     revalidatePath("/my-lists");
-    revalidatePath("/my-lists/{listId}");
+    revalidatePath("/my-lists/{listId}", "page");
     return { success: true };
   } catch (error) {
     return {
