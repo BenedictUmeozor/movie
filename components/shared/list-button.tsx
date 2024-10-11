@@ -58,7 +58,7 @@ const AddToListButton = memo(
       <DropdownMenu>
         <DropdownMenuTrigger asChild className={cn(DROPDOWN_TRIGGER_STYLE)}>
           <Button variant="ghost" size="icon">
-            <LayoutList size={20} />
+            {mutation.isPending ? <TailwindSpinner /> : <LayoutList />}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className={cn(DROPDOWN_CONTENT_STYLE)}>
@@ -88,7 +88,7 @@ const AddToListButton = memo(
               className={cn(DROPDOWN_ITEM_STYLE, "cursor-pointer")}
               onClick={() => mutation.mutate(list._id)}
             >
-              {mutation.isPending ? <TailwindSpinner /> : list.name}
+              {list.name}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
