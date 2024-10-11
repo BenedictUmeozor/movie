@@ -1,6 +1,7 @@
 import { IListItem } from "@/lib/models/list";
 import Image from "next/image";
 import Link from "next/link";
+import ListAction from "./list-action";
 
 const ListItem = ({ item }: { item: IListItem }) => {
   const link =
@@ -13,7 +14,7 @@ const ListItem = ({ item }: { item: IListItem }) => {
     <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
       <Link href={link} className="relative mx-auto">
         <Image
-          src={process.env.NEXT_PUBLIC_IMG_URL + item.posterPath}
+          src={process.env.IMG_URL + item.posterPath}
           alt={item.title}
           width={200}
           height={300}
@@ -26,6 +27,7 @@ const ListItem = ({ item }: { item: IListItem }) => {
         </Link>
         <div className="flex items-center justify-between">
           <p className="text-sm text-light-white">{type}</p>
+          <ListAction />
         </div>
       </div>
     </div>

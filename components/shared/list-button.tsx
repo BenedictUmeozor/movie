@@ -19,6 +19,11 @@ import { TailwindSpinner } from "../ui/spinner";
 import { addToList } from "@/server/mutations/list";
 import useMessage from "@/hooks/message";
 import { getQueryClient } from "@/providers/query";
+import {
+  DROPDOWN_CONTENT_STYLE,
+  DROPDOWN_ITEM_STYLE,
+  DROPDOWN_TRIGGER_STYLE,
+} from "@/lib/constants";
 
 const AddToListButton = memo(
   ({ mediaType, posterPath, title, tmdbId }: IListItem) => {
@@ -51,21 +56,28 @@ const AddToListButton = memo(
 
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild className={cn(DROPDOWN_TRIGGER_STYLE)}>
           <Button variant="ghost" size="icon">
             <LayoutList size={20} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className={cn("w-56")}>
+        <DropdownMenuContent className={cn(DROPDOWN_CONTENT_STYLE)}>
           <DropdownMenuLabel>Add to list</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {isPending && (
-            <DropdownMenuItem className="flex items-center justify-center">
+            <DropdownMenuItem
+              className={cn(
+                DROPDOWN_ITEM_STYLE,
+                "flex items-center justify-center",
+              )}
+            >
               <TailwindSpinner />
             </DropdownMenuItem>
           )}
           {isError && (
-            <DropdownMenuItem className="text-red-600">
+            <DropdownMenuItem
+              className={cn(DROPDOWN_ITEM_STYLE, "text-red-600")}
+            >
               Something went wrong
             </DropdownMenuItem>
           )}
@@ -73,7 +85,7 @@ const AddToListButton = memo(
             <DropdownMenuItem
               key={list._id}
               disabled={mutation.isPending}
-              className="cursor-pointer"
+              className={cn(DROPDOWN_ITEM_STYLE, "cursor-pointer")}
               onClick={() => mutation.mutate(list._id)}
             >
               {mutation.isPending ? <TailwindSpinner /> : list.name}
