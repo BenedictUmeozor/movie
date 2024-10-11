@@ -19,12 +19,15 @@ export const signup = async (data: SignupSchema): Promise<ActionResponse> => {
     const { success, data: parsedData } = signupSchema.safeParse(data);
     if (!success) throw new Error("Invalid signup data");
 
-    const { email, fullName, password } = parsedData;
+    const { email, fullName, password, username } = parsedData;
 
     await connectDB();
 
-    const exists = await User.exists({ email });
-    if (exists) throw new Error("User already exists");
+    const emailExists = await User.exists({ email });
+    if (emailExists) throw new Error("User already exists");
+
+    const usernameExists = await User.exists({ username });
+    if (usernameExists) throw new Error("User already exists");
 
     const hashedPassword = await new Argon2id().hash(password);
 

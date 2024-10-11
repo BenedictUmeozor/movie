@@ -33,6 +33,7 @@ const SignupForm = () => {
       email: "",
       fullName: "",
       password: "",
+      username: "",
     },
   });
 
@@ -75,6 +76,23 @@ const SignupForm = () => {
                   <Input
                     {...field}
                     placeholder="John Doe"
+                    className={cn("h-11 focus-visible:ring-primary-blue")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-medium-white">Username</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="johndoe123"
                     className={cn("h-11 focus-visible:ring-primary-blue")}
                   />
                 </FormControl>

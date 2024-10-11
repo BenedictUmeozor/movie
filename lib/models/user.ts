@@ -5,6 +5,7 @@ import { generateTimeBasedId } from "@/utils/functions";
 export interface IUser {
   _id: string;
   fullName: string;
+  username: string;
   email: string;
   password: string;
   lists: string[];
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema<IUser>(
     _id: { type: String, required: true },
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true },
     lists: [{ type: String, ref: "List" }],
     password: { type: String, required: true },
     likes: [{ type: String, ref: "Like" }],
