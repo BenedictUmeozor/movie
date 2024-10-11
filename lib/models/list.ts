@@ -16,6 +16,7 @@ export interface IList {
   isFavourite: boolean;
   isSaved: boolean;
   userId: string;
+  likes: string[];
 }
 
 const listSchema = new mongoose.Schema<IList>(
@@ -35,6 +36,7 @@ const listSchema = new mongoose.Schema<IList>(
     isFavourite: { type: Boolean, required: true, default: false },
     isSaved: { type: Boolean, required: true, default: false },
     userId: { type: String, ref: "User" },
+    likes: [{ type: String, ref: "Like" }],
   } as const,
   { timestamps: true, _id: false },
 );

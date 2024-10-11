@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   lists: string[];
+  likes: string[];
 }
 
 const userSchema = new mongoose.Schema<IUser>(
@@ -15,6 +16,7 @@ const userSchema = new mongoose.Schema<IUser>(
     email: { type: String, required: true, unique: true },
     lists: [{ type: String, ref: "List" }],
     password: { type: String, required: true },
+    likes: [{ type: String, ref: "Like" }],
   } as const,
   { _id: false, timestamps: true },
 );
