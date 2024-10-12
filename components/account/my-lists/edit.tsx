@@ -42,7 +42,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Fragment } from "react";
-import { ListWithUser } from "@/types/mongodb";
+import { ListWithUserAndLikes } from "@/types/mongodb";
 
 type FormSchema = z.infer<typeof listSchema>;
 
@@ -51,7 +51,7 @@ const EditList = ({
   btnWidth = "",
   list,
 }: {
-  list: ListWithUser;
+  list: ListWithUserAndLikes;
   className?: string;
   btnWidth?: string;
 }) => {
