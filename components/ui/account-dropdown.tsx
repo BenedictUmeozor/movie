@@ -22,9 +22,12 @@ import {
   DROPDOWN_ITEM_STYLE,
   DROPDOWN_SEPARATOR_STYLE,
 } from "@/lib/constants";
+import { useSession } from "@/providers/session";
 
 const AccountDropdown = () => {
   const [open, setOpen] = useState(false);
+
+  const { user } = useSession();
 
   const { alertMessage } = useMessage();
 
@@ -51,7 +54,7 @@ const AccountDropdown = () => {
         <Avatar className="cursor-pointer max-md:hidden">
           <AvatarImage src="" />
           <AvatarFallback className={cn(AVATAR_FALLBACK_STYLE)}>
-            BU
+            {user?.fullName.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

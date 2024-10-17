@@ -6,6 +6,9 @@ import { Separator } from "../ui/separator";
 import { Fragment } from "react";
 import { IListItem } from "@/lib/models/list";
 import ListItem from "./listItem";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+import LikeButton from "./like";
 
 const ListPage = ({ list }: { list: ListWithUserAndLikes }) => {
   return (
@@ -24,6 +27,19 @@ const ListPage = ({ list }: { list: ListWithUserAndLikes }) => {
       <div className="space-y-3">
         <p className="text-medium-white">{list.description}</p>
         <PrivateOrPublic isPrivate={list.isPrivate} />
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage src="" />
+            <AvatarFallback className={cn("bg-gray-500")}>
+              {list.user.fullName[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span>{list.user.username}</span>
+        </div>
+        <LikeButton list={list} />
       </div>
 
       <Separator />
