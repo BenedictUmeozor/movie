@@ -6,8 +6,12 @@ import Image from "next/image";
 import { Badge } from "./badge";
 import clsx from "clsx";
 import Link from "next/link";
+import { useSession } from "@/providers/session";
+import AddToListButton from "../shared/list-button";
 
 const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
+  const { session } = useSession();
+
   return (
     <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
       <Link href={`/tv-show/${tvShow.id}`} className="relative mx-auto block">
@@ -50,9 +54,19 @@ const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
       </Link>
       <div className="mx-auto space-y-2 py-1">
         <h3 className="text-sm font-semibold">{tvShow.name}</h3>
-        <p className="text-sm text-light-white">
-          {formatDate(tvShow.first_air_date)}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-light-white">
+            {formatDate(tvShow.first_air_date)}
+          </p>
+          {!!session && (
+            <AddToListButton
+              mediaType="tv-show"
+              posterPath={tvShow.poster_path}
+              title={tvShow.name}
+              tmdbId={tvShow.id}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

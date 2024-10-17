@@ -21,6 +21,7 @@ const Movie = memo(({ movie }: { movie: MovieInterface }) => {
           alt={movie.title}
           width={200}
           height={300}
+          style={{ maxWidth: "100%" }}
           className="aspect-[5/6] w-full rounded-tl rounded-tr object-cover"
         />
         <Badge
