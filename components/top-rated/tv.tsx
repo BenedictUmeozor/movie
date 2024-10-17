@@ -2,7 +2,7 @@ import { getTopRatedTvs, getTvGenres } from "@/utils/getters";
 import Container from "../ui/container";
 import GenreSorter from "../shared/genre-sorter";
 import PaginationComponent from "../shared/pagination";
-import TVShow from "../ui/tvshow";
+import { RenderTvShows } from "../shared/render";
 
 const TopRated = async ({
   searchParams,
@@ -28,14 +28,10 @@ const TopRated = async ({
   }
 
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <GenreSorter genres={genres} pathname="/tv-shows/top-rated" />
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((tvShow) => (
-            <TVShow key={tvShow.id} tvShow={tvShow} />
-          ))}
-        </div>
+        <RenderTvShows tvShows={filtered} />
         <PaginationComponent
           total_pages={total_pages}
           pathname="/tv-shows/top-rated"

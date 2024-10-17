@@ -1,8 +1,8 @@
 import { getGenres, getUpcomingMovies } from "@/utils/getters";
 import Container from "../ui/container";
-import Movie from "../ui/movie";
 import PaginationComponent from "../shared/pagination";
 import GenreSorter from "../shared/genre-sorter";
+import { RenderMovies } from "../shared/render";
 
 const Upcoming = async ({
   searchParams,
@@ -28,14 +28,10 @@ const Upcoming = async ({
   }
 
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <GenreSorter genres={genres} pathname="/movies/upcoming" />
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((movie) => (
-            <Movie key={movie.id} movie={movie} />
-          ))}
-        </div>
+        <RenderMovies movies={filtered} />
         <PaginationComponent
           total_pages={total_pages}
           pathname="/movies/upcoming"

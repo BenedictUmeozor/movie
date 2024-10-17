@@ -13,7 +13,7 @@ const ListPage = async ({ listId }: { listId: string }) => {
 
   if (!list) {
     return (
-      <div className="mt-12 space-y-8">
+      <div className="space-y-8">
         <Link
           href="/my-lists"
           className="inline-flex items-center gap-1 text-primary-blue"
@@ -26,7 +26,7 @@ const ListPage = async ({ listId }: { listId: string }) => {
   }
 
   return (
-    <div className="mt-12 space-y-8">
+    <div className="space-y-8">
       <Link
         href="/my-lists"
         className="inline-flex items-center gap-1 text-primary-blue"

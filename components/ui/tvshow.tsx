@@ -13,14 +13,14 @@ const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
   const { session } = useSession();
 
   return (
-    <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
+    <div className="space-y-1 rounded p-2 transition-colors hover:bg-light-gray max-md:p-1">
       <Link href={`/tv-show/${tvShow.id}`} className="relative mx-auto block">
         <Image
           src={process.env.NEXT_PUBLIC_IMG_URL + tvShow.poster_path}
           alt={tvShow.name}
           width={200}
           height={300}
-          className="aspect-[5/6] w-full rounded-tl rounded-tr object-cover"
+          className="aspect-[4/6] w-full rounded-tl rounded-tr object-cover"
         />
         <Badge
           className={clsx(

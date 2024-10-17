@@ -1,8 +1,8 @@
 import Container from "../ui/container";
-import Movie from "../ui/movie";
 import PaginationComponent from "../shared/pagination";
 import GenreSorter from "../shared/genre-sorter";
 import { Genre, Movie as MovieInterface } from "@/types/globals";
+import { RenderMovies } from "../shared/render";
 
 const SearchResult = async ({
   searchParams,
@@ -29,17 +29,13 @@ const SearchResult = async ({
   }
 
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <GenreSorter
           genres={genres}
           pathname={`/search/movies/${params.query}`}
         />
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((movie) => (
-            <Movie key={movie.id} movie={movie} />
-          ))}
-        </div>
+        <RenderMovies movies={filtered} />
         <PaginationComponent
           total_pages={total_pages}
           pathname={`/search/movies/${params.query}`}

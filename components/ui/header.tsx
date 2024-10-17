@@ -22,13 +22,20 @@ const Header = async () => {
         <div className="flex-[2] max-md:flex-[3]">
           <SearchBar />
         </div>
-        <div className="flex flex-1 items-center justify-end gap-3">
-          <Link
-            href="/lists"
-            className="text-basemax-md:hidden flex items-center gap-2"
-          >
-            Lists <ChevronDown size={16} />
-          </Link>
+        <div className="flex flex-1 items-center justify-end gap-4">
+          <div className="flex items-center">
+            <Button
+              variant={"ghost"}
+              className="flex items-center gap-2 max-md:hidden"
+            >
+              Genres <ChevronDown width={16} />
+            </Button>
+            <Button variant={"ghost"} className="max-md:hidden" asChild>
+              <Link href="/lists" className="max-md:hidden">
+                Lists
+              </Link>
+            </Button>
+          </div>
           {!!session ? (
             <AccountDropdown />
           ) : (

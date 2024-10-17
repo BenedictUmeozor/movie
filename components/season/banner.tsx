@@ -5,7 +5,7 @@ import { TVShowController } from "@/types/tvshow";
 
 const Banner = ({ season }: { season: TVShowController.Show }) => {
   return (
-    <div className="mt-12">
+    <div>
       <Container>
         <div className="mb-8 grid grid-cols-[0.8fr_1fr] gap-6 lg:hidden">
           <div>

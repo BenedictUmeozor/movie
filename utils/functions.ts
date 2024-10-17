@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 type RatingColorClass =
@@ -17,7 +18,7 @@ export function getRatingColorClass(rating: number): RatingColorClass {
   return "bg-red-500";
 }
 
-export const shuffleArray = <T>(array: T[]): T[] => {
+export const shuffleArray = cache(<T>(array: T[]): T[] => {
   const shuffledArray = [...array];
 
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -29,7 +30,7 @@ export const shuffleArray = <T>(array: T[]): T[] => {
   }
 
   return shuffledArray;
-};
+});
 
 export function generateTimeBasedId(): string {
   const timestamp = new Date().getTime().toString(36); // Convert timestamp to base36

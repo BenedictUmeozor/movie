@@ -1,126 +1,140 @@
 "use client";
 
-import { CSSProperties, memo, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { PlayCircle } from "lucide-react";
+
 import Container from "../ui/container";
 import { Separator } from "../ui/separator";
-import imdb from "@/assets/imdb-logo-2016-1.svg";
-import Image from "next/image";
 import { Button } from "../ui/button";
-import Link from "next/link";
-import { PlayCircle } from "lucide-react";
-import { Genre, SingleMovie } from "@/types/globals";
-// import { AnimatePresence, motion } from "framer-motion";
+import { TailwindSpinner } from "../ui/spinner";
+import imdb from "@/assets/imdb-logo-2016-1.svg";
+import { Genre } from "@/types/globals";
 import { getYear } from "@/lib/utils";
+import { getMovieArray } from "@/utils/getters";
+import useRandomIndex from "@/hooks/random-index";
 
-// const fadeVariants = {
-//   hidden: { opacity: 0 },
-//   visible: { opacity: 1 },
-// };
-
-const getMovieArray = async (movieIds: number[]): Promise<SingleMovie[]> => {
-  const promises = movieIds.map(async (id) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/${id}?append_to_response=credits&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
-    );
-    return response.json();
-  });
-
-  return Promise.all(promises);
+const fadeVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
 };
 
-const Hero = memo(
-  ({ movieIds, genres }: { movieIds: number[]; genres: Genre[] }) => {
-    const [movies, setMovies] = useState<SingleMovie[]>([]);
-    const [randIndex, setRandIndex] = useState(
-      Math.floor(Math.random() * movieIds.length),
-    );
+interface HeroProps {
+  movieIds: number[];
+  genres: Genre[];
+}
 
-    const style: CSSProperties = useMemo(() => {
-      return {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('${process.env.NEXT_PUBLIC_IMG_URL}${movies[randIndex]?.backdrop_path}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        transition: "background-image 0.5s ease-in-out",
-      };
-    }, [movies, randIndex]);
+const Hero = memo(({ movieIds, genres }: HeroProps) => {
+  const pathname = usePathname();
+  const { randIndex } = useRandomIndex(movieIds.length);
 
-    useEffect(() => {
-      if (movies.length === 0) {
-        (async () => {
-          const array = await getMovieArray(movieIds);
-          setMovies(array);
-        })();
-      }
-    }, [movies, movieIds]);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["hero-movies", pathname],
+    queryFn: () => getMovieArray(movieIds),
+  });
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setRandIndex((prevIndex) => {
-          let newIndex;
-          do {
-            newIndex = Math.floor(Math.random() * movieIds.length);
-          } while (newIndex === prevIndex);
-          return newIndex;
-        });
-      }, 10000); // Change movie every 10 seconds
+  const currentMovie = data?.[randIndex];
 
-      return () => clearInterval(interval);
-    }, [movieIds.length]);
+  const backgroundStyle = useMemo(
+    () => ({
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('${process.env.NEXT_PUBLIC_IMG_URL}${currentMovie?.backdrop_path}')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      transition: "background-image 0.5s ease-in-out",
+    }),
+    [currentMovie?.backdrop_path],
+  );
 
+  const getGenreName = useCallback(
+    (genreId: number) =>
+      genres?.find((genre) => genre.id === genreId)?.name || "",
+    [genres],
+  );
+
+  if (isPending) {
     return (
-      <section
-        style={style}
+      <section className="grid h-screen max-h-[600px] w-full animate-pulse place-items-center bg-black">
+        <TailwindSpinner className="h-10 w-10" />
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="grid h-screen max-h-[600px] w-full place-items-center bg-black">
+        <p className="text-2xl text-red-600">Something went wrong</p>
+      </section>
+    );
+  }
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.section
+        style={backgroundStyle}
+        key={randIndex}
+        variants={fadeVariants}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        transition={{ duration: 0.25 }}
         className="grid h-screen max-h-[600px] w-full place-items-center"
       >
         <Container>
-          {movies.length > 0 && (
-            <div className="space-y-6">
-              <Link
-                href={`/movie/${movies[randIndex].id}`}
-                className="text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
-              >
-                {movies[randIndex].title}
-              </Link>
-              <div className="flex h-5 items-center space-x-4 text-sm font-medium max-lg:justify-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-14">
-                    <Image src={imdb} alt="imdb" width={100} height={100} />
-                  </div>
-                  {movies[randIndex].vote_average.toFixed(1)}
+          <div className="space-y-6">
+            <Link
+              href={`/movie/${currentMovie?.id}`}
+              className="block text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
+            >
+              {currentMovie?.title}
+            </Link>
+            <div className="flex h-5 items-center space-x-4 text-sm font-medium max-lg:justify-center">
+              <div className="flex items-center gap-2">
+                <div className="w-14">
+                  <Image src={imdb} alt="imdb" width={100} height={100} />
                 </div>
-                <Separator orientation="vertical" />
-                <div>{getYear(movies[randIndex].release_date)}</div>
-                <Separator orientation="vertical" />
+                {currentMovie?.vote_average.toFixed(1)}
+              </div>
+              <Separator orientation="vertical" />
+              {!!currentMovie && (
+                <div>{getYear(currentMovie.release_date)}</div>
+              )}
+              <Separator orientation="vertical" />
+              {!!currentMovie && (
                 <div className="text-primary-blue">
-                  {!genres
-                    ? ""
-                    : genres.find(
-                        (genre) => movies[randIndex].genres[0].id === genre.id,
-                      )?.name}
+                  {getGenreName(currentMovie?.genres?.[0]?.id)}
                 </div>
-              </div>
-              <p className="w-[95%] max-w-2xl max-lg:mx-auto max-lg:text-center">
-                {movies[randIndex].overview}
-              </p>
-              <div className="items-center justify-center max-lg:flex">
-                <Button
-                  className="mt-8 bg-primary-blue hover:bg-blue-900"
-                  size={"lg"}
-                >
-                  <Link href="/" className="flex w-full items-center gap-2">
-                    <PlayCircle size={20} />
-                    Watch Trailer
-                  </Link>
-                </Button>
-              </div>
+              )}
             </div>
-          )}
+            <p className="w-[95%] max-w-2xl max-lg:mx-auto max-lg:text-center">
+              {currentMovie?.overview}
+            </p>
+            <div className="items-center justify-center max-lg:flex">
+              <Button
+                className="mt-8 bg-primary-blue hover:bg-blue-900"
+                size="lg"
+                asChild
+              >
+                <Link
+                  href={`https://www.imdb.com/title/${currentMovie?.imdb_id}`}
+                  target="_blank"
+                  className="inline-flex items-center gap-2"
+                >
+                  <PlayCircle size={20} />
+                  Watch Trailer
+                </Link>
+              </Button>
+            </div>
+          </div>
         </Container>
-      </section>
-    );
-  },
-);
+      </motion.section>
+    </AnimatePresence>
+  );
+});
 
 Hero.displayName = "Hero";
 export default Hero;

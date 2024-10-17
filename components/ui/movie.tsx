@@ -1,11 +1,10 @@
 "use client";
 
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { Movie as MovieInterface } from "@/types/globals";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./badge";
-import clsx from "clsx";
 import { useSession } from "@/providers/session";
 import AddToListButton from "../shared/list-button";
 import { memo } from "react";
@@ -14,7 +13,7 @@ const Movie = memo(({ movie }: { movie: MovieInterface }) => {
   const { session } = useSession();
 
   return (
-    <div className="aspect-[5/6] rounded p-2 transition-colors hover:bg-light-gray">
+    <div className="rounded p-2 transition-colors hover:bg-light-gray max-md:p-1 space-y-1">
       <Link href={`/movie/${movie.id}`} className="relative mx-auto">
         <Image
           src={process.env.NEXT_PUBLIC_IMG_URL + movie.poster_path}
@@ -22,10 +21,10 @@ const Movie = memo(({ movie }: { movie: MovieInterface }) => {
           width={200}
           height={300}
           style={{ maxWidth: "100%" }}
-          className="aspect-[5/6] w-full rounded-tl rounded-tr object-cover"
+          className="aspect-[4/6] w-full rounded-tl rounded-tr object-cover"
         />
         <Badge
-          className={clsx(
+          className={cn(
             "absolute left-1 top-1",
             {
               "bg-teal-500 hover:bg-teal-500": movie.vote_average >= 9,

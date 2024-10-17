@@ -2,7 +2,7 @@ import Container from "../ui/container";
 import PaginationComponent from "../shared/pagination";
 import GenreSorter from "../shared/genre-sorter";
 import { Genre, TvShow } from "@/types/globals";
-import TVShow from "../ui/tvshow";
+import { RenderTvShows } from "../shared/render";
 
 const SearchResult = async ({
   searchParams,
@@ -29,17 +29,13 @@ const SearchResult = async ({
   }
 
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <GenreSorter
           genres={genres}
           pathname={`/search/tv-shows/${params.query}`}
         />
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((tvShow) => (
-            <TVShow key={tvShow.id} tvShow={tvShow} />
-          ))}
-        </div>
+        <RenderTvShows tvShows={filtered} />
         <PaginationComponent
           total_pages={total_pages}
           pathname={`/search/tv-shows/${params.query}`}

@@ -94,7 +94,7 @@ export const getMovieArray = async (
 ): Promise<SingleMovie[]> => {
   const promises = movieIds.map(async (id) => {
     const response = await fetch(
-      `${process.env.API_BASE_URL}/movie/${id}?append_to_response=credits&api_key=${process.env.API_KEY}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/${id}?append_to_response=credits&api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
     );
     return response.json();
   });

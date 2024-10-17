@@ -1,6 +1,6 @@
 import { TvShowApiResponse } from "@/types/globals";
 import Container from "../ui/container";
-import TVShow from "../ui/tvshow";
+import { RenderTvShows } from "../shared/render";
 
 const getSimilarSeries = async ({
   tvShowId,
@@ -17,17 +17,15 @@ const getSimilarSeries = async ({
 const SimilarTvShows = async ({ tvShowId }: { tvShowId: string }) => {
   const { results } = await getSimilarSeries({ tvShowId });
 
+  const tvShows = results.slice(0, 8);
+
   return (
     <div className="my-12">
       <Container>
         <h3 className="mb-8 flex items-center gap-2 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
           Similar
         </h3>
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {results.slice(0, 8).map((tvShow) => (
-            <TVShow key={tvShow.id} tvShow={tvShow} />
-          ))}
-        </div>
+        <RenderTvShows tvShows={tvShows} />
       </Container>
     </div>
   );

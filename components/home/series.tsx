@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { getTvShows } from "@/utils/getters";
 import { shuffleArray } from "@/utils/functions";
-import TVShow from "../ui/tvshow";
+import { RenderTvShows } from "../shared/render";
 
 const SeriesSection = async () => {
   const { results } = await getTvShows();
@@ -12,21 +12,21 @@ const SeriesSection = async () => {
   const series = shuffleArray(results).slice(0, 8);
 
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold max-md:text-xl">TV Shows</h2>
-          <Button size={"icon"} className="bg-primary-blue hover:bg-blue-900" asChild>
+          <Button
+            size={"icon"}
+            className="bg-primary-blue hover:bg-blue-900"
+            asChild
+          >
             <Link href="/tv-shows">
               <ChevronRight size={20} />
             </Link>
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {series.map((tvshow) => (
-            <TVShow key={tvshow.id} tvShow={tvshow} />
-          ))}
-        </div>
+        <RenderTvShows tvShows={series} />
       </Container>
     </section>
   );

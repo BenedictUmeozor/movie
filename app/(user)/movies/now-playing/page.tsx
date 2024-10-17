@@ -1,4 +1,4 @@
-import NowPlaying from "@/components/now-playing/now-playing";
+import NowPlaying from "@/components/now-playing";
 import Hero from "@/components/shared/hero";
 import { getGenres, getNowPlayingMovies } from "@/utils/getters";
 

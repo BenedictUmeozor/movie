@@ -1,6 +1,6 @@
 import { MovieResponse } from "@/types/globals";
 import Container from "../ui/container";
-import Movie from "../ui/movie";
+import { RenderMovies } from "../shared/render";
 
 const getSimilarMovies = async ({
   movieId,
@@ -17,17 +17,15 @@ const getSimilarMovies = async ({
 const SimilarMovies = async ({ movieId }: { movieId: string }) => {
   const { results } = await getSimilarMovies({ movieId });
 
+  const movies = results.slice(0, 8);
+
   return (
     <div className="my-12">
       <Container>
         <h3 className="mb-8 flex items-center gap-2 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
           Similar
         </h3>
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {results.slice(0, 8).map((movie) => (
-            <Movie key={movie.id} movie={movie} />
-          ))}
-        </div>
+        <RenderMovies movies={movies} />
       </Container>
     </div>
   );

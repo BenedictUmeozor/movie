@@ -1,4 +1,4 @@
-import Hero from "@/components/home/hero";
+import Hero from "@/components/shared/hero";
 import MoviesSection from "@/components/home/movies";
 import SeriesSection from "@/components/home/series";
 import { getGenres, getMovies } from "@/utils/getters";

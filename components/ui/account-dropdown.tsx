@@ -17,7 +17,6 @@ import { useState } from "react";
 import { TailwindSpinner } from "./spinner";
 import { cn } from "@/lib/utils";
 import {
-  AVATAR_FALLBACK_STYLE,
   DROPDOWN_CONTENT_STYLE,
   DROPDOWN_ITEM_STYLE,
   DROPDOWN_SEPARATOR_STYLE,
@@ -53,7 +52,7 @@ const AccountDropdown = () => {
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer max-md:hidden">
           <AvatarImage src="" />
-          <AvatarFallback className={cn(AVATAR_FALLBACK_STYLE)}>
+          <AvatarFallback className={cn("text-black")}>
             {user?.fullName.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>

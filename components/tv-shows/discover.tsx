@@ -41,7 +41,7 @@ const settings: Settings = {
 
 const Discover = ({ tvShows }: { tvShows: TvShow[] }) => {
   return (
-    <section className="pt-12">
+    <section>
       <Container>
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold max-md:text-xl">Discover</h2>

@@ -1,5 +1,5 @@
 import Hero from "@/components/shared/hero";
-import Upcoming from "@/components/upcoming/upcoming";
+import Upcoming from "@/components/upcoming";
 import { getGenres, getUpcomingMovies } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
