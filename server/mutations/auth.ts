@@ -10,6 +10,7 @@ import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ActionResponse } from "@/types/globals";
+import { revalidatePath } from "next/cache";
 
 type SignupSchema = z.infer<typeof signupSchema>;
 type SigninSchema = z.infer<typeof loginSchema>;
@@ -105,5 +106,6 @@ export const signout = async (): Promise<ActionResponse> => {
     sessionCookie.attributes,
   );
 
+  revalidatePath("/", "layout");
   return redirect("/login");
 };

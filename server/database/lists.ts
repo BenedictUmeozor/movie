@@ -5,8 +5,9 @@ import connectDB from "@/lib/db";
 import List, { IList } from "@/lib/models/list";
 import { ListWithUserAndLikes } from "@/types/mongodb";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
-export const getAllLists = async () => {
+export const getAllLists = cache(async () => {
   try {
     await connectDB();
 
@@ -29,9 +30,9 @@ export const getAllLists = async () => {
     console.log(error);
     throw new Error("Failed to get user lists");
   }
-};
+});
 
-export const getUserLists = async () => {
+export const getUserLists = cache(async () => {
   const { session } = await validateRequest();
 
   if (!session) {
@@ -47,9 +48,9 @@ export const getUserLists = async () => {
     console.log(error);
     throw new Error("Failed to get user lists");
   }
-};
+});
 
-export const getParticularList = async (listId: string) => {
+export const getParticularList = cache(async (listId: string) => {
   try {
     await connectDB();
     const list = await List.findById(listId)
@@ -67,4 +68,4 @@ export const getParticularList = async (listId: string) => {
     console.log(error);
     throw new Error("Failed to get user lists");
   }
-};
+});

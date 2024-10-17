@@ -38,7 +38,7 @@ export const createList = async ({
 
     await list.save();
 
-    revalidatePath("/my-lists");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     return {
@@ -81,7 +81,7 @@ export const addToList = async ({
     list.items.push(item);
     await list.save();
 
-    revalidatePath("/my-lists");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     return {
@@ -133,7 +133,7 @@ export const changeList = async ({
     list.items.push(item);
     await list.save();
 
-    revalidatePath("/my-lists/{listId}", "page");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     return {
@@ -164,7 +164,7 @@ export const deleteFromList = async ({
     if (result.modifiedCount < 1) {
       throw new Error("List not found");
     }
-    revalidatePath("/my-lists/{listId}", "page");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     return {
@@ -197,8 +197,8 @@ export const updateList = async ({
       { new: true },
     );
     if (!updatedList) throw new Error("List not found");
-    revalidatePath("/my-lists");
-    revalidatePath("/my-lists/{listId}", "page");
+
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     return {
@@ -215,7 +215,7 @@ export const deleteList = async (listId: string): Promise<ActionResponse> => {
     await connectDB();
     const deletedList = await List.findOneAndDelete({ _id: listId });
     if (!deletedList) throw new Error("List not found");
-    revalidatePath("/my-lists");
+    revalidatePath("/", "layout");
     redirect("/my-lists");
   } catch (error) {
     return {

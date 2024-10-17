@@ -28,7 +28,7 @@ export default async function Page({
       <Videos movieId={params.movieId} />
       <Companies companies={movie.production_companies} />
       <Cast cast={movie.credits.cast} title={movie.title} />
-      <Reviews />
+      <Reviews tmdbId={parseInt(params.movieId)} />
       <SimilarMovies movieId={params.movieId} />
     </main>
   );
