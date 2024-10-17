@@ -34,11 +34,9 @@ export default async function RootLayout({
         <SessionProvider value={session}>
           <NotistackProvider>
             <QueryProvider>
-              <section className="grid min-h-screen grid-rows-[auto_1fr_auto]">
-                <Header />
-                <div>{children}</div>
-                <Footer />
-              </section>
+              <Header />
+              <div>{children}</div>
+              <Footer />
             </QueryProvider>
           </NotistackProvider>
         </SessionProvider>
