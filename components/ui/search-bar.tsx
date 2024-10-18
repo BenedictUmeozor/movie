@@ -69,7 +69,11 @@ const SearchBar = () => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="w-[95%] max-w-lg rounded-lg bg-black p-6 text-white shadow-xl">
+      <DialogContent
+        className={cn(
+          "w-[95%] max-w-lg rounded-lg bg-black p-6 text-white shadow-xl",
+        )}
+      >
         <DialogHeader className="mb-6">
           <DialogTitle className="mb-2 flex items-center gap-3 text-2xl font-bold">
             Search <Search size={24} className="text-primary-blue" />

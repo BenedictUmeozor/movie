@@ -10,6 +10,11 @@ const Reviews = async ({ tmdbId }: { tmdbId: number }) => {
 
   const { session } = await validateRequest();
 
+  const userReview = reviews.find(
+    (review) => review.user._id === session?.userId,
+  );
+  const rest = reviews.filter((review) => review.user._id !== session?.userId);
+
   const userHasReviewed =
     !!session && reviews.some((review) => review.user._id === session.userId);
 
@@ -21,9 +26,10 @@ const Reviews = async ({ tmdbId }: { tmdbId: number }) => {
         </h3>
         <Separator />
         <p className="my-4 text-medium-white">{reviews.length} reviews</p>
-        {!!session && !userHasReviewed && <AddReviewForm />}
+        {!!session && !userHasReviewed && <AddReviewForm tmdbId={tmdbId} />}
         <div className="mt-8 space-y-4">
-          {reviews.map((review) => (
+          {userReview && <Review review={userReview} isUserReview={true} />}
+          {rest.map((review) => (
             <Review key={review._id} review={review} />
           ))}
         </div>

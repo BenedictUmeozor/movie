@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: { showId: string } }) {
       <Videos tvShowId={params.showId} />
       <Companies companies={tvShow.production_companies} />
       <Cast cast={tvShow.credits.cast} title={tvShow.name} />
-      <Reviews />
+      <Reviews tmdbId={parseInt(params.showId)} />
       <SimilarTvShows tvShowId={params.showId} />
     </main>
   );

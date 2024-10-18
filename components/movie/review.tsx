@@ -1,12 +1,21 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
 import { ReviewWithUserAndLikes } from "@/types/mongodb";
 import { formatDate } from "@/lib/utils";
+import LikeButton from "../shared/review/like";
+import { Fragment } from "react";
+import EditReview from "../shared/review/edit";
+import { Rating } from "@mui/material";
+import DeleteReview from "../shared/review/delete";
 
-const Review = ({ review }: { review: ReviewWithUserAndLikes }) => {
+const Review = ({
+  review,
+  isUserReview,
+}: {
+  review: ReviewWithUserAndLikes;
+  isUserReview?: boolean;
+}) => {
   return (
     <div className="space-y-3">
       <header className="flex items-center justify-between">
@@ -24,13 +33,17 @@ const Review = ({ review }: { review: ReviewWithUserAndLikes }) => {
         </span>
       </header>
       <div className="space-y-2">
+        <Rating value={review.rating} readOnly />
         <p className="font-medium">{review.title}</p>
         <p className="text-medium-white">{review.body}</p>
         <div className="flex items-center gap-1">
-          <Button size={"icon"} variant={"ghost"}>
-            <Heart size={20} />
-          </Button>
-          <span className="text-sm text-medium-white">24 likes</span>
+          <LikeButton review={review} />
+          {isUserReview && (
+            <Fragment>
+              <EditReview review={review} />
+              <DeleteReview reviewId={review._id} />
+            </Fragment>
+          )}
         </div>
       </div>
     </div>

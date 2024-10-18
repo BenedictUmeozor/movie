@@ -50,7 +50,11 @@ export default async function Page({
         seasonId={params.seasonId}
       />
       <Cast cast={details.credits.cast} title={details.name} />
-      <Reviews />
+      <Reviews
+        episodeId={parseInt(params.episodeId)}
+        tmdbId={parseInt(params.showId)}
+        seasonId={parseInt(params.seasonId)}
+      />
     </main>
   );
 }
