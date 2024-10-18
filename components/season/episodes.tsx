@@ -24,7 +24,10 @@ const Episodes = ({
               key={episode.id}
               className="items-start gap-4 max-md:space-y-6 md:flex"
             >
-              <div className="md:w-36">
+              <Link
+                href={`/tv-show/${showId}/season/${episode.season_number}/episode/${episode.episode_number}`}
+                className="block md:w-64 lg:w-80"
+              >
                 <Image
                   src={process.env.IMG_URL + episode.still_path}
                   alt={episode.name}
@@ -32,7 +35,7 @@ const Episodes = ({
                   width={200}
                   className="aspect-[6/4] w-full rounded-sm object-cover"
                 />
-              </div>
+              </Link>
               <div className="flex-1 space-y-1">
                 <Link
                   className="flex items-center gap-1 hover:underline"
