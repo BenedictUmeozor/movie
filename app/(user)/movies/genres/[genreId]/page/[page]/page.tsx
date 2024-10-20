@@ -5,10 +5,6 @@ import Container from "@/components/ui/container";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getMovies } from "@/utils/getters";
 
-export const generateStaticParams = async () => {
-  return [];
-};
-
 export const generateMetadata = async ({
   params,
 }: {

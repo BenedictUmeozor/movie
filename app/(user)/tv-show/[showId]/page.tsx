@@ -9,10 +9,6 @@ import Reviews from "@/components/tv-show/reviews";
 import Videos from "@/components/tv-show/videos";
 import { Metadata } from "next";
 
-export async function generateStaticParams() {
-  return [];
-}
-
 export const generateMetadata = async ({
   params,
 }: {

@@ -4,10 +4,6 @@ import { getParticularList } from "@/server/database/lists";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-export const generateStaticParams = async () => {
-  return [];
-};
-
 export const generateMetadata = async ({
   params,
 }: {

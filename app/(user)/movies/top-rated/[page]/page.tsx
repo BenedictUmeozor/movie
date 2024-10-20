@@ -4,10 +4,6 @@ import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getTopRatedMovies } from "@/utils/getters";
 import { Metadata } from "next";
 
-export const generateStaticParams = async () => {
-  return [];
-};
-
 export const metadata: Metadata = {
   title: "Upcoming Movies - Movie Empire",
 };

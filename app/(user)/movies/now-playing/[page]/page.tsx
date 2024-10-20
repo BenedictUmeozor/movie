@@ -4,10 +4,6 @@ import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getNowPlayingMovies } from "@/utils/getters";
 import { Metadata } from "next";
 
-export const generateStaticParams = async () => {
-  return [];
-};
-
 export const metadata: Metadata = {
   title: "Now Playing Movies - Movie Empire",
 };

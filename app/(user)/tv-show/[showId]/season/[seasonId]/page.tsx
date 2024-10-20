@@ -9,9 +9,6 @@ import { Metadata } from "next";
 // import { getSingleTvShow } from "@/utils/getters";
 import { notFound } from "next/navigation";
 
-export const generateStaticParams = async () => {
-  return [];
-};
 
 export const generateMetadata = async ({
   params,

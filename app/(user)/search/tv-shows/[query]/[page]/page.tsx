@@ -5,10 +5,6 @@ import { getTvGenres, getSearchTvResults } from "@/utils/getters";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-export const generateStaticParams = async () => {
-  return [];
-};
-
 export const generateMetadata = async ({
   params,
 }: {

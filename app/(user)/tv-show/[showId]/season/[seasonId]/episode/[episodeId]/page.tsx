@@ -8,9 +8,6 @@ import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
 
-export const generateStaticParams = async () => {
-  return [];
-};
 
 export const generateMetadata = async ({
   params,

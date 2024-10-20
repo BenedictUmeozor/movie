@@ -3,15 +3,12 @@ import PaginationComponent from "@/components/shared/pagination";
 import { RenderMovies } from "@/components/shared/render";
 import Container from "@/components/ui/container";
 import { formatNumberWithCommas } from "@/utils/functions";
-import { getGenres, getMovies, getTvGenres } from "@/utils/getters";
+import { getGenres, getMovies } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
   const { genres } = await getGenres();
-  const { genres: tvGenres } = await getTvGenres();
 
-  const all = [...genres, ...tvGenres];
-
-  return all.map((genre) => ({
+  return genres.map((genre) => ({
     genreId: genre.id.toString(),
   }));
 };

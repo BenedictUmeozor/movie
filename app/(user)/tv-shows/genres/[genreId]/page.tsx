@@ -3,15 +3,12 @@ import { RenderTvShows } from "@/components/shared/render";
 import Hero from "@/components/tv-shows/hero";
 import Container from "@/components/ui/container";
 import { formatNumberWithCommas } from "@/utils/functions";
-import { getGenres, getTvGenres, getTvShows } from "@/utils/getters";
+import { getTvGenres, getTvShows } from "@/utils/getters";
 
 export const generateStaticParams = async () => {
-  const { genres } = await getGenres();
-  const { genres: tvGenres } = await getTvGenres();
+  const { genres } = await getTvGenres();
 
-  const all = [...genres, ...tvGenres];
-
-  return all.map((genre) => ({
+  return genres.map((genre) => ({
     genreId: genre.id.toString(),
   }));
 };
