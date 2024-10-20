@@ -5,7 +5,7 @@ import { getGenres, getMovies } from "@/utils/getters";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TV Shows - Movie Empire",
+  title: "Home - Movie Empire",
 };
 
 export default async function Page() {
