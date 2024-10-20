@@ -23,7 +23,7 @@ export default async function Page({
   }
 
   return (
-    <main>
+    <main className="py-8">
       <Banner movie={movie} />
       <Videos movieId={params.movieId} />
       <Companies companies={movie.production_companies} />

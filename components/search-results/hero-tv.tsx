@@ -5,7 +5,7 @@ import imdb from "@/assets/imdb-logo-2016-1.svg";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { PlayCircle } from "lucide-react";
+import { LinkIcon } from "lucide-react";
 import { Genre } from "@/types/globals";
 import { getYear } from "@/lib/utils";
 import { getSingleTvShow } from "@/utils/getters";
@@ -63,11 +63,15 @@ const Hero = async ({
           <div className="items-center justify-center max-lg:flex">
             <Button
               className="mt-8 bg-primary-blue hover:bg-blue-900"
-              size={"lg"}
+              size="lg"
+              asChild
             >
-              <Link href="/" className="flex w-full items-center gap-2">
-                <PlayCircle size={20} />
-                Watch Trailer
+              <Link
+                href={`/tv-show/${tvShow.id}`}
+                className="inline-flex items-center gap-2"
+              >
+                See Details
+                <LinkIcon width={16} />
               </Link>
             </Button>
           </div>

@@ -1,10 +1,14 @@
 import Link from "next/link";
 import Container from "./container";
 import { Button } from "./button";
-import { ChevronDown, Menu, Video } from "lucide-react";
+import { Menu, Video } from "lucide-react";
 import SearchBar from "./search-bar";
 import AccountDropdown from "./account-dropdown";
 import { validateRequest } from "@/lib/auth";
+import GenreSheet from "./genre-sheet";
+import { Suspense } from "react";
+import { getGenres, getTvGenres } from "@/utils/getters";
+import { TailwindSpinner } from "./spinner";
 
 const Header = async () => {
   const { session } = await validateRequest();
@@ -24,12 +28,9 @@ const Header = async () => {
         </div>
         <div className="flex flex-1 items-center justify-end gap-4">
           <div className="flex items-center">
-            <Button
-              variant={"ghost"}
-              className="flex items-center gap-2 max-md:hidden"
-            >
-              Genres <ChevronDown width={16} />
-            </Button>
+            <Suspense fallback={<TailwindSpinner />}>
+              <GenreProvider />
+            </Suspense>
             <Button variant={"ghost"} className="max-md:hidden" asChild>
               <Link href="/lists" className="max-md:hidden">
                 Lists
@@ -55,4 +56,17 @@ const Header = async () => {
     </header>
   );
 };
+
+const GenreProvider = async () => {
+  const movieGenres = await getGenres();
+  const tvShowGenres = await getTvGenres();
+
+  return (
+    <GenreSheet
+      movieGenres={movieGenres.genres}
+      tvShowGenres={tvShowGenres.genres}
+    />
+  );
+};
+
 export default Header;

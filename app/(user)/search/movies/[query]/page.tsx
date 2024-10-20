@@ -1,19 +1,15 @@
 import Hero from "@/components/search-results/hero-movie";
 import SearchResult from "@/components/search-results/movie";
+import { TailwindSpinner } from "@/components/ui/spinner";
 import { getGenres, getSearchMovieResults } from "@/utils/getters";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export const generateStaticParams = async () => {
   return [];
 };
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { query: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Page({ params }: { params: { query: string } }) {
   const { results, total_pages } = await getSearchMovieResults({
     query: params.query,
   });
@@ -26,11 +22,17 @@ export default async function Page({
 
   return (
     <main>
-      <Hero movieId={results[0].id} genres={genres} />
+      <Suspense
+        fallback={
+          <section className="grid h-screen max-h-[600px] w-full animate-pulse place-items-center bg-black">
+            <TailwindSpinner className="h-10 w-10" />
+          </section>
+        }
+      >
+        <Hero movieId={results[0].id} genres={genres} />
+      </Suspense>
       <SearchResult
-        genres={genres}
         results={results}
-        searchParams={searchParams}
         total_pages={total_pages}
         params={params}
       />

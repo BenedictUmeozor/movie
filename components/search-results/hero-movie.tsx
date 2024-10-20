@@ -62,9 +62,14 @@ const Hero = async ({
           <div className="items-center justify-center max-lg:flex">
             <Button
               className="mt-8 bg-primary-blue hover:bg-blue-900"
-              size={"lg"}
+              size="lg"
+              asChild
             >
-              <Link href="/" className="flex w-full items-center gap-2">
+              <Link
+                href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                target="_blank"
+                className="inline-flex items-center gap-2"
+              >
                 <PlayCircle size={20} />
                 Watch Trailer
               </Link>

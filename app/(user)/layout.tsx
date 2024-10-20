@@ -35,7 +35,7 @@ export default async function RootLayout({
           <NotistackProvider>
             <QueryProvider>
               <Header />
-              <div className="my-8">{children}</div>
+              <div>{children}</div>
               <Footer />
             </QueryProvider>
           </NotistackProvider>

@@ -12,7 +12,7 @@ const style: CSSProperties = {
 
 export default function Page() {
   return (
-    <main>
+    <main className="space-y-8">
       <section
         style={style}
         className="flex h-screen max-h-[400px] items-center max-lg:justify-center"

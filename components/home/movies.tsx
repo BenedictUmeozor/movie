@@ -10,7 +10,7 @@ const MoviesSection = ({ movies }: { movies: MovieInterface[] }) => {
   const shuffiedMovies = shuffleArray(movies).slice(0, 8);
 
   return (
-    <section>
+    <section className="my-8">
       <Container>
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold max-md:text-xl">Movies</h2>

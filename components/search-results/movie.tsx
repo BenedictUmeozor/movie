@@ -1,41 +1,25 @@
 import Container from "../ui/container";
 import PaginationComponent from "../shared/pagination";
-import GenreSorter from "../shared/genre-sorter";
-import { Genre, Movie as MovieInterface } from "@/types/globals";
+import { Movie as MovieInterface } from "@/types/globals";
 import { RenderMovies } from "../shared/render";
 
 const SearchResult = async ({
-  searchParams,
-  genres,
   results,
   total_pages,
   params,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
   params: { query: string };
-  genres: Genre[];
   total_pages: number;
   results: MovieInterface[];
 }) => {
-  let filtered = results;
-
-  const urlParams = (searchParams.genres as string)?.split(",") || [];
-  const genreParams = urlParams.map((param) => parseInt(param));
-
-  if (genreParams.length) {
-    filtered = [...results].filter((movie) =>
-      movie.genre_ids.some((genre) => genreParams.includes(genre)),
-    );
-  }
-
   return (
     <section>
       <Container>
-        <GenreSorter
-          genres={genres}
-          pathname={`/search/movies/${params.query}`}
-        />
-        <RenderMovies movies={filtered} />
+        <h2 className="my-8 text-center text-xl font-bold leading-normal tracking-wide md:text-2xl">
+          Search Results For{" "}
+          <span className="italic text-medium-white">{params.query}</span>
+        </h2>
+        <RenderMovies movies={results} />
         <PaginationComponent
           total_pages={total_pages}
           pathname={`/search/movies/${params.query}`}

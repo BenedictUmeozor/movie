@@ -8,10 +8,8 @@ export const generateStaticParams = async () => {
 
 export default async function Page({
   params,
-  searchParams,
 }: {
   params: { page: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { results } = await getPopularMovies(Number(params.page));
   const { genres } = await getGenres();
@@ -20,7 +18,7 @@ export default async function Page({
   return (
     <main>
       <Hero movieIds={movieIds} genres={genres} />
-      <Popular searchParams={searchParams} params={params} />
+      <Popular params={params} />
     </main>
   );
 }

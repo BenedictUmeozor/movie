@@ -20,10 +20,17 @@ export const getTvGenres = async (): Promise<{ genres: Genre[] }> => {
   return response.json();
 };
 
-export const getMovies = async (page: number = 1): Promise<MovieResponse> => {
-  const response = await fetch(
-    `${process.env.API_BASE_URL}/discover/movie?page=${page}&api_key=${process.env.API_KEY}`,
-  );
+export const getMovies = async (
+  page: number = 1,
+  genre?: number,
+): Promise<MovieResponse> => {
+  let url = `${process.env.API_BASE_URL}/discover/movie?page=${page}&api_key=${process.env.API_KEY}`;
+
+  if (genre) {
+    url += `&with_genres=${genre}`;
+  }
+
+  const response = await fetch(url);
   return response.json();
 };
 
@@ -65,10 +72,15 @@ export const getUpcomingMovies = async (
 
 export const getTvShows = async (
   page: number = 1,
+  genre?: number,
 ): Promise<TvShowApiResponse> => {
-  const response = await fetch(
-    `${process.env.API_BASE_URL}/discover/tv?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`,
-  );
+  let url = `${process.env.API_BASE_URL}/discover/tv?page=${page}&without_genres=10764,10763,99,10767&api_key=${process.env.API_KEY}`;
+
+  if (genre) {
+    url += `&with_genres=${genre}`;
+  }
+
+  const response = await fetch(url);
 
   return response.json();
 };

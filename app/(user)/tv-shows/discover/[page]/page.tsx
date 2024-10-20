@@ -16,7 +16,7 @@ export default async function Page({
   return (
     <main>
       <Hero tvShowIds={tvShowIds} genres={genres} />
-      <Discover searchParams={searchParams} />
+      <Discover />
     </main>
   );
 }

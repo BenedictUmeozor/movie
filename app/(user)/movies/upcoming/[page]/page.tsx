@@ -6,13 +6,7 @@ export const generateStaticParams = async () => {
   return [];
 };
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { page: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Page({ params }: { params: { page: string } }) {
   const { results } = await getUpcomingMovies(Number(params.page));
   const { genres } = await getGenres();
   const movieIds = results.map((movie) => movie.id);
@@ -20,7 +14,7 @@ export default async function Page({
   return (
     <main>
       <Hero movieIds={movieIds} genres={genres} />
-      <Upcoming searchParams={searchParams} params={params} />
+      <Upcoming params={params} />
     </main>
   );
 }

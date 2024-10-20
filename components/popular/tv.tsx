@@ -1,37 +1,20 @@
-import { getPopularTvs, getTvGenres } from "@/utils/getters";
+import { getPopularTvs } from "@/utils/getters";
 import Container from "../ui/container";
-import GenreSorter from "../shared/genre-sorter";
 import PaginationComponent from "../shared/pagination";
 import { RenderTvShows } from "../shared/render";
 
-const Popular = async ({
-  searchParams,
-  params,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-  params?: { page: string };
-}) => {
-  const { genres } = await getTvGenres();
+const Popular = async ({ params }: { params?: { page: string } }) => {
   const { results, total_pages } = await getPopularTvs(
     Number(params?.page) || 1,
   );
 
-  let filtered = results;
-
-  const urlParams = (searchParams.genres as string)?.split(",") || [];
-  const genreParams = urlParams.map((param) => parseInt(param));
-
-  if (genreParams.length) {
-    filtered = [...results].filter((tvShow) =>
-      tvShow.genre_ids.some((genre) => genreParams.includes(genre)),
-    );
-  }
-
   return (
     <section>
       <Container>
-        <GenreSorter genres={genres} pathname="/tv-shows/popular" />
-        <RenderTvShows tvShows={filtered} />
+        <h2 className="my-8 text-center text-xl font-bold leading-normal tracking-wide md:text-2xl">
+          Popular
+        </h2>
+        <RenderTvShows tvShows={results} />
         <PaginationComponent
           total_pages={total_pages}
           pathname="/tv-shows/popular"

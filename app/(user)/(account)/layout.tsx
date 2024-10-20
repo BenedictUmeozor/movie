@@ -13,5 +13,5 @@ export default async function AccountLayout({
     redirect("/sign-in");
   }
 
-  return <section>{children}</section>;
+  return <section className="my-8">{children}</section>;
 }
