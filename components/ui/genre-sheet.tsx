@@ -16,7 +16,16 @@ import { ScrollArea } from "./scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Input } from "./input";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "./form";
+
+const searchSchema = z.object({
+  term: z.string(),
+});
 
 const GenreSheet = ({
   movieGenres,
@@ -28,8 +37,33 @@ const GenreSheet = ({
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  const form = useForm<z.infer<typeof searchSchema>>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      term: "",
+    },
+  });
+
+  const searchTerm = form.watch("term");
+
+  const Mgenres = useMemo(() => {
+    if (!searchTerm) return movieGenres;
+    return movieGenres.filter((genre) =>
+      genre.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [movieGenres, searchTerm]);
+
+  const TVGenres = useMemo(() => {
+    if (!searchTerm) return tvShowGenres;
+    return tvShowGenres.filter((genre) =>
+      genre.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [tvShowGenres, searchTerm]);
+
   useEffect(() => {
+    form.setValue("term", "");
     setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -52,12 +86,27 @@ const GenreSheet = ({
         <SheetHeader>
           <SheetTitle className="text-white">Genres</SheetTitle>
           <div className="relative mt-4">
-            <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
-            <input
-              type="search"
-              placeholder="Search genres..."
-              className="w-full rounded-md bg-neutral-700 py-2 pl-8 pr-4 text-sm text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-300"
-            />
+            <Form {...form}>
+              <form>
+                <FormField
+                  control={form.control}
+                  name="term"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
+                      <FormControl>
+                        <Input
+                          type="search"
+                          placeholder="Search genres..."
+                          className="w-full rounded-md bg-neutral-700 py-2 pl-8 pr-4 text-sm text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-300"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </form>
+            </Form>
           </div>
         </SheetHeader>
         <ScrollArea className="mt-6 h-[calc(100vh-180px)]">
@@ -82,7 +131,7 @@ const GenreSheet = ({
             </TabsList>
             <TabsContent value="movies">
               <ul className="grid grid-cols-2 gap-3">
-                {movieGenres.map((genre) => (
+                {Mgenres.map((genre) => (
                   <li key={genre.id}>
                     <Link
                       href={`/movies/genres/${genre.id}`}
@@ -107,7 +156,7 @@ const GenreSheet = ({
             </TabsContent>
             <TabsContent value="tvshows">
               <ul className="grid grid-cols-2 gap-3">
-                {tvShowGenres.map((genre) => (
+                {TVGenres.map((genre) => (
                   <li key={genre.id}>
                     <Link
                       href={`/tv-shows/genres/${genre.id}`}
