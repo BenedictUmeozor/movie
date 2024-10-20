@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "./sheet";
 import { Button } from "./button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Genre } from "@/types/globals";
@@ -16,7 +16,7 @@ import { ScrollArea } from "./scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Input } from "./input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -69,12 +69,23 @@ const GenreSheet = ({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
-          variant={"ghost"}
-          className="flex items-center gap-2 max-md:hidden"
-        >
-          Genres <ChevronDown width={16} />
-        </Button>
+        <Fragment>
+          <Button
+            variant={"ghost"}
+            className="hidden items-center gap-2 lg:flex"
+            onClick={() => setOpen(true)}
+          >
+            Genres <ChevronDown width={16} />
+          </Button>
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="lg:hidden"
+            onClick={() => setOpen(true)}
+          >
+            <Tag width={20} />
+          </Button>
+        </Fragment>
       </SheetTrigger>
       <SheetContent
         side={"left"}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "./container";
 import { Button } from "./button";
-import { Menu, Video } from "lucide-react";
+import { Video } from "lucide-react";
 import SearchBar from "./search-bar";
 import AccountDropdown from "./account-dropdown";
 import { validateRequest } from "@/lib/auth";
@@ -9,6 +9,7 @@ import GenreSheet from "./genre-sheet";
 import { Suspense } from "react";
 import { getGenres, getTvGenres } from "@/utils/getters";
 import { TailwindSpinner } from "./spinner";
+import MobileMenu from "./mobile-menu";
 
 const Header = async () => {
   const { session } = await validateRequest();
@@ -23,16 +24,16 @@ const Header = async () => {
           <Video size={28} fill="#1475E6" stroke="#1475E6" />
           <span className="max-lg:hidden">Movie Empire</span>
         </Link>
-        <div className="flex-[2] max-md:flex-[3]">
+        <div className="flex-[2] max-lg:flex-[3]">
           <SearchBar />
         </div>
         <div className="flex flex-1 items-center justify-end gap-4">
-          <div className="flex items-center">
+          <div className="flex items-center max-lg:hidden">
             <Suspense fallback={<TailwindSpinner />}>
               <GenreProvider />
             </Suspense>
-            <Button variant={"ghost"} className="max-md:hidden" asChild>
-              <Link href="/lists" className="max-md:hidden">
+            <Button variant={"ghost"} className="max-lg:hidden" asChild>
+              <Link href="/lists" className="max-lg:hidden">
                 Lists
               </Link>
             </Button>
@@ -42,15 +43,16 @@ const Header = async () => {
           ) : (
             <Link
               href="/sign-in"
-              className="hidden h-9 items-center justify-center rounded bg-primary-blue px-4 text-white hover:bg-blue-900 md:inline-flex"
+              className="hidden h-9 items-center justify-center rounded bg-primary-blue px-4 text-white hover:bg-blue-900 lg:inline-flex"
             >
               Sign in
             </Link>
           )}
 
-          <Button variant={"ghost"} size={"icon"} className="md:hidden">
-            <Menu size={24} />
-          </Button>
+          <div className="flex lg:hidden">
+            <GenreProvider />
+            <MobileMenu />
+          </div>
         </div>
       </Container>
     </header>
