@@ -10,7 +10,7 @@ export const generateStaticParams = async () => {
 };
 
 export default async function Page({ params }: { params: { query: string } }) {
-  const { results, total_pages } = await getSearchTvResults({
+  const { results, total_pages, total_results } = await getSearchTvResults({
     query: params.query,
   });
   const { genres } = await getTvGenres();
@@ -31,6 +31,7 @@ export default async function Page({ params }: { params: { query: string } }) {
         <Hero tvShowId={results[0].id} genres={genres} />
       </Suspense>
       <SearchResult
+        total_results={total_results}
         results={results}
         total_pages={total_pages}
         params={params}

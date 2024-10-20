@@ -14,7 +14,7 @@ export default async function Page({
 }: {
   params: { query: string; page: string };
 }) {
-  const { results, total_pages } = await getSearchTvResults({
+  const { results, total_pages, total_results } = await getSearchTvResults({
     query: params.query,
     page: Number(params.page),
   });
@@ -36,6 +36,7 @@ export default async function Page({
         <Hero tvShowId={results[0].id} genres={genres} />
       </Suspense>
       <SearchResult
+        total_results={total_results}
         results={results}
         total_pages={total_pages}
         params={params}

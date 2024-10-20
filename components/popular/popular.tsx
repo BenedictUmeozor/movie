@@ -11,9 +11,6 @@ const Popular = async ({ params }: { params?: { page: string } }) => {
   return (
     <section>
       <Container>
-        <h2 className="my-8 text-center text-xl font-bold leading-normal tracking-wide md:text-2xl">
-          Popular
-        </h2>
         <RenderMovies movies={results} />
         <PaginationComponent
           total_pages={total_pages}

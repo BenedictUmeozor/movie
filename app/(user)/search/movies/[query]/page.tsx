@@ -10,7 +10,7 @@ export const generateStaticParams = async () => {
 };
 
 export default async function Page({ params }: { params: { query: string } }) {
-  const { results, total_pages } = await getSearchMovieResults({
+  const { results, total_pages, total_results } = await getSearchMovieResults({
     query: params.query,
   });
 
@@ -33,6 +33,7 @@ export default async function Page({ params }: { params: { query: string } }) {
       </Suspense>
       <SearchResult
         results={results}
+        total_results={total_results}
         total_pages={total_pages}
         params={params}
       />
