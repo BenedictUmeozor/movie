@@ -82,7 +82,7 @@ const Hero = memo(
             <div className="space-y-6">
               <Link
                 href={`/tv-show/${currentTvShow?.id}`}
-                className="text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
+                className="text-4xl block font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
               >
                 {currentTvShow?.name}
               </Link>
@@ -104,7 +104,7 @@ const Hero = memo(
                   </div>
                 )}
               </div>
-              <p className="w-[95%] max-w-2xl max-lg:mx-auto max-lg:text-center">
+              <p className="w-[95%] max-w-2xl max-lg:mx-auto max-md:text-sm max-lg:text-center">
                 {currentTvShow?.overview}
               </p>
               <div className="items-center justify-center max-lg:flex">

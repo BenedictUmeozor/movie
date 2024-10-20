@@ -56,7 +56,7 @@ const Hero = async ({
                 : genres.find((genre) => movie.genres[0].id === genre.id)?.name}
             </div>
           </div>
-          <p className="w-[95%] max-w-2xl max-lg:mx-auto max-lg:text-center">
+          <p className="w-[95%] max-w-2xl max-lg:mx-auto max-lg:text-center max-md:text-sm">
             {movie.overview}
           </p>
           <div className="items-center justify-center max-lg:flex">
