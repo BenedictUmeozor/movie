@@ -15,8 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import GoogleButton from "../shared/google-button";
+// import { Separator } from "@/components/ui/separator";
+// import GoogleButton from "../shared/google-button";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { signup } from "@/server/mutations/auth";
@@ -148,12 +148,12 @@ const SignupForm = () => {
             {mutation.isPending ? <TailwindSpinner /> : "Submit"}
           </Button>
         </form>
-        <div className="flex items-center justify-center gap-4 overflow-hidden">
+        {/* <div className="flex items-center justify-center gap-4 overflow-hidden">
           <Separator />
           <span className="text-sm font-bold text-medium-white">OR</span>
           <Separator />
         </div>
-        <GoogleButton />
+        <GoogleButton /> */}
         <p className="text-center text-medium-white">
           Already have an account?{" "}
           <Link href="/sign-in" className="text-primary-blue hover:underline">
