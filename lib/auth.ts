@@ -1,4 +1,4 @@
-import { Lucia } from "lucia";
+import { Lucia, TimeSpan } from "lucia";
 import { adapter } from "./adapter";
 import { IUser } from "./models/user";
 import type { Session, User } from "lucia";
@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { cache } from "react";
 
 export const lucia = new Lucia(adapter, {
+  sessionExpiresIn: new TimeSpan(5, "d"),
   sessionCookie: {
     attributes: {
       secure: process.env.NODE_ENV === "production",
