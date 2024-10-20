@@ -2,6 +2,11 @@ import Discover from "@/components/discover/movie";
 import Hero from "@/components/shared/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Discover - Movie Empire",
+};
 
 export default async function Page() {
   const { results, total_results } = await getMovies(1);

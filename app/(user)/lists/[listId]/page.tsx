@@ -1,10 +1,22 @@
 import ListPage from "@/components/lists/list-page";
 import Container from "@/components/ui/container";
 import { getParticularList } from "@/server/database/lists";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const generateStaticParams = async () => {
   return [];
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { listId: string };
+}): Promise<Metadata> => {
+  const list = await getParticularList(params.listId);
+  return {
+    title: `${list.name} - Movie Empire`,
+  };
 };
 
 export default async function Page({ params }: { params: { listId: string } }) {

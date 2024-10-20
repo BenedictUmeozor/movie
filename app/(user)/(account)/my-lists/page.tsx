@@ -3,7 +3,12 @@ import Lists from "@/components/account/my-lists/lists";
 import Container from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "My Lists - Movie Empire",
+};
 
 export default function Page() {
   return (

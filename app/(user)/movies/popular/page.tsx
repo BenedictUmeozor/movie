@@ -2,6 +2,11 @@ import Popular from "@/components/popular/popular";
 import Hero from "@/components/shared/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getPopularMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Popular Movies - Movie Empire",
+};
 
 export default async function Page() {
   const { results, total_results } = await getPopularMovies(1);

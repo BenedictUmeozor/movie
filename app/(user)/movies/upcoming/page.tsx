@@ -2,6 +2,11 @@ import Hero from "@/components/shared/hero";
 import Upcoming from "@/components/upcoming";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getUpcomingMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Upcoming Movies - Movie Empire",
+};
 
 export default async function Page() {
   const { results, total_results } = await getUpcomingMovies(1);

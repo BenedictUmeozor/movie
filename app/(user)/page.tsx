@@ -2,6 +2,11 @@ import Hero from "@/components/shared/hero";
 import MoviesSection from "@/components/home/movies";
 import SeriesSection from "@/components/home/series";
 import { getGenres, getMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TV Shows - Movie Empire",
+};
 
 export default async function Page() {
   const { results } = await getMovies(1);

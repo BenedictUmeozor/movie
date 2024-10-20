@@ -2,6 +2,11 @@ import NowPlaying from "@/components/now-playing";
 import Hero from "@/components/shared/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getNowPlayingMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Now Playing Movies - Movie Empire",
+};
 
 export default async function Page() {
   const { results, total_results } = await getNowPlayingMovies(1);

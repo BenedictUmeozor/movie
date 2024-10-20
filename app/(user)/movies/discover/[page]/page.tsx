@@ -2,9 +2,14 @@ import Discover from "@/components/discover/movie";
 import Hero from "@/components/shared/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getMovies } from "@/utils/getters";
+import { Metadata } from "next";
 
 export const generateStaticParams = async () => {
   return [];
+};
+
+export const metadata: Metadata = {
+  title: "Discover - Movie Empire",
 };
 
 export default async function Page({ params }: { params: { page: string } }) {

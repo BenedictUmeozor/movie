@@ -3,6 +3,11 @@ import Hero from "@/components/tv-shows/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getTvGenres, getPopularTvs } from "@/utils/getters";
 
+export const metadata = {
+  title: "Popular - Movie Empire",
+};
+
+
 export default async function Page({ params }: { params: { page: string } }) {
   const { results, total_results } = await getPopularTvs(Number(params.page));
   const { genres } = await getTvGenres();

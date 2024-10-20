@@ -1,6 +1,11 @@
 import SignupForm from "@/components/auth/sign-up/form";
 import { Video } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Sign Up - Movie Empire",
+};
 
 export default function Page() {
   return (

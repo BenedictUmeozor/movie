@@ -9,6 +9,32 @@ export const generateStaticParams = async () => {
   return [];
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { query: string };
+}) => {
+  const { results } = await getSearchTvResults({
+    query: params.query,
+  });
+
+  if (!results || !results.length) {
+    return {
+      title: "Search Movies",
+    };
+  }
+
+  return {
+    title: `Search Movies - ${results[0].name}`,
+    description: `Search Movies - ${results[0].overview}`,
+    openGraph: {
+      title: `Search Movies - ${results[0].name}`,
+      description: `Search Movies - ${results[0].overview}`,
+      url: `https://movie-empire.vercel.app/search/tv-shows/${params.query}`,
+    },
+  };
+};
+
 export default async function Page({
   params,
 }: {

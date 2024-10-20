@@ -1,6 +1,7 @@
 import movie_bg from "@/assets/movie_bg.jpg";
 import ListPage from "@/components/lists";
 import Container from "@/components/ui/container";
+import { Metadata } from "next";
 import { CSSProperties } from "react";
 
 const style: CSSProperties = {
@@ -8,6 +9,10 @@ const style: CSSProperties = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
+};
+
+export const metadata: Metadata = {
+  title: "Community Lists - Movie Empire",
 };
 
 export default function Page() {

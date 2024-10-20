@@ -3,6 +3,10 @@ import Hero from "@/components/tv-shows/hero";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getTvGenres, getAiringTodayTvs } from "@/utils/getters";
 
+export const metadata = {
+  title: "Airing Today - Movie Empire",
+};
+
 export default async function Page({ params }: { params: { page: string } }) {
   const { results, total_results } = await getAiringTodayTvs(
     Number(params.page),

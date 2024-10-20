@@ -4,11 +4,37 @@ import Reviews from "@/components/season/reviews";
 import Videos from "@/components/season/videos";
 import Cast from "@/components/shared/cast/cast";
 import { TVShowController } from "@/types/tvshow";
+import { getSingleTvShow } from "@/utils/getters";
+import { Metadata } from "next";
 // import { getSingleTvShow } from "@/utils/getters";
 import { notFound } from "next/navigation";
 
 export const generateStaticParams = async () => {
   return [];
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { showId: string; seasonId: string };
+}): Promise<Metadata> => {
+  const tvShow = await getSingleTvShow(Number(params.showId));
+
+  return {
+    title: `Season ${params.seasonId} - ${tvShow.name} - Movie Empire`,
+    description: tvShow.overview,
+    openGraph: {
+      title: `Season ${params.seasonId} -${tvShow.name} - Movie Empire`,
+      description: tvShow.overview,
+      url: `https://movie-empire.vercel.app/movie/${params.showId}`,
+      images: [
+        {
+          url: tvShow.poster_path,
+        },
+      ],
+    },
+    metadataBase: new URL(process.env.IMG_URL),
+  };
 };
 
 const getSeasonInfo = async ({

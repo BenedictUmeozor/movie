@@ -5,11 +5,36 @@ import Videos from "@/components/movie/videos";
 import Cast from "@/components/shared/cast/cast";
 import Companies from "@/components/shared/companies";
 import { getSingleMovie } from "@/utils/getters";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return [];
 }
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { movieId: string };
+}): Promise<Metadata> => {
+  const movie = await getSingleMovie(Number(params.movieId));
+
+  return {
+    title: `${movie.title} - Movie Empire`,
+    description: movie.overview,
+    openGraph: {
+      title: `${movie.title} - Movie Empire`,
+      description: movie.overview,
+      url: `https://movie-empire.vercel.app/movie/${params.movieId}`,
+      images: [
+        {
+          url: movie.poster_path,
+        },
+      ],
+    },
+    metadataBase: new URL(process.env.IMG_URL),
+  };
+};
 
 export default async function Page({
   params,

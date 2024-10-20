@@ -9,6 +9,18 @@ export const generateStaticParams = async () => {
   return [];
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { genreId: string };
+}) => {
+  const { genres } = await getGenres();
+  const genre = genres.find((genre) => genre.id === parseInt(params.genreId));
+  return {
+    title: `Movies | ${genre?.name}`,
+  };
+};
+
 export default async function Page({
   params,
 }: {

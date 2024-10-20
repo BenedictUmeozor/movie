@@ -2,6 +2,11 @@ import Hero from "@/components/shared/hero";
 import TopRated from "@/components/top-rated/top-rated";
 import { formatNumberWithCommas } from "@/utils/functions";
 import { getGenres, getTopRatedMovies } from "@/utils/getters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Top Rated Movies - Movie Empire",
+};
 
 export default async function Page() {
   const { results, total_results } = await getTopRatedMovies(1);
