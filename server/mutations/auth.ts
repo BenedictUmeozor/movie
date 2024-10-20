@@ -107,5 +107,5 @@ export const signout = async (): Promise<ActionResponse> => {
   );
 
   revalidatePath("/", "layout");
-  return redirect("/login");
+  return redirect("/sign-in");
 };
