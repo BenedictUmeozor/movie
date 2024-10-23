@@ -1,9 +1,9 @@
 import Discover from "@/components/movies/discover";
-import Hero from "@/components/movies/hero";
 import NowPlaying from "@/components/movies/now-playing";
 import Popular from "@/components/movies/popular";
 import TopRated from "@/components/movies/top-rated";
 import Upcoming from "@/components/movies/upcoming";
+import Hero from "@/components/shared/hero";
 import { getGenres, getMovies } from "@/utils/getters";
 import { Metadata } from "next";
 
@@ -17,7 +17,7 @@ export default async function Page() {
   const { genres } = await getGenres();
 
   return (
-    <main>
+    <main className="space-y-16">
       <Hero movieIds={movieIds} genres={genres} />
       <Discover movies={results} />
       <Popular />

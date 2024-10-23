@@ -122,7 +122,7 @@ const EditList = ({
         className={`max-w-[425px] bg-medium-gray text-medium-white ${className}`}
       >
         <DialogHeader>
-          <DialogTitle className="text-white">Create new list</DialogTitle>
+          <DialogTitle className="text-white">Edit list</DialogTitle>
         </DialogHeader>
         <div>
           <Form {...form}>

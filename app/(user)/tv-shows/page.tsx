@@ -12,7 +12,7 @@ export default async function Page() {
   const tvShowIds = results.map((tvShow) => tvShow.id);
 
   return (
-    <main>
+    <main className="space-y-16">
       <Hero genres={genres} tvShowIds={tvShowIds} />
       <Discover tvShows={results} />
       <Popular />

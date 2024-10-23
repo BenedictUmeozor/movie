@@ -13,14 +13,12 @@ const AiringToday = async () => {
 
   return (
     <section>
-      <Container>
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-2xl font-bold max-md:text-xl">Airing Today</h2>
-          <Button
-            size={"icon"}
-            className="bg-primary-blue hover:bg-blue-900"
-            asChild
-          >
+      <Container className="space-y-8">
+        <div className="flex items-center justify-between">
+          <h2 className="px-2 text-2xl font-bold max-md:px-1 max-md:text-xl">
+            Airing Today
+          </h2>
+          <Button size={"icon"} asChild>
             <Link href="/tv-shows/airing-today">
               <ChevronRight size={20} />
             </Link>
