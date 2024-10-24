@@ -10,7 +10,10 @@ const Cast = ({ cast, title }: { cast: Castinterface[]; title?: string }) => {
     <div className="my-12">
       <Container>
         <h3 className="mb-8 flex items-center gap-2 text-2xl font-bold leading-normal tracking-wide max-lg:text-xl">
-          Top Cast <CastSheet cast={cast} title={title} />
+          Top Cast{" "}
+          {cast.length > trimmed.length && (
+            <CastSheet cast={cast} title={title} />
+          )}
         </h3>
         <div
           style={{ rowGap: "2rem" }}
