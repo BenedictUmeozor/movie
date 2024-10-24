@@ -13,7 +13,7 @@ const Movie = memo(({ movie }: { movie: MovieInterface }) => {
   const { session } = useSession();
 
   return (
-    <div className="rounded p-2 transition-colors hover:bg-light-gray max-md:p-1 space-y-1">
+    <div className="space-y-1 rounded p-2 transition-colors hover:bg-light-gray max-md:p-1">
       <Link href={`/movie/${movie.id}`} className="relative mx-auto">
         <Image
           src={process.env.NEXT_PUBLIC_IMG_URL + movie.poster_path}
@@ -54,7 +54,10 @@ const Movie = memo(({ movie }: { movie: MovieInterface }) => {
         </Badge>
       </Link>
       <div className="mx-auto space-y-2 py-1">
-        <Link href={`/movie/${movie.id}`} className="text-sm font-semibold">
+        <Link
+          href={`/movie/${movie.id}`}
+          className="line-clamp-1 text-sm font-semibold"
+        >
           {movie.title}
         </Link>
         <div className="flex items-center justify-between">

@@ -53,7 +53,7 @@ const TVShow = ({ tvShow }: { tvShow: TvShow }) => {
         </Badge>
       </Link>
       <div className="mx-auto space-y-2 py-1">
-        <h3 className="text-sm font-semibold">{tvShow.name}</h3>
+        <h3 className="line-clamp-1 text-sm font-semibold">{tvShow.name}</h3>
         <div className="flex items-center justify-between">
           <p className="text-sm text-light-white">
             {formatDate(tvShow.first_air_date)}
