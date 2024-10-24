@@ -9,7 +9,7 @@ import { RenderMovies } from "../shared/render";
 const Popular = async () => {
   const { results } = await getPopularMovies(1);
 
-  const shuffledMovies = shuffleArray(results).slice(0, 8);
+  const shuffledMovies = shuffleArray(results).slice(0, 10);
 
   return (
     <section>

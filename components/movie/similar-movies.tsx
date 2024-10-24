@@ -17,7 +17,7 @@ const getSimilarMovies = async ({
 const SimilarMovies = async ({ movieId }: { movieId: string }) => {
   const { results } = await getSimilarMovies({ movieId });
 
-  const movies = results.slice(0, 8);
+  const movies = results.slice(0, 10);
 
   return (
     <div className="my-12">

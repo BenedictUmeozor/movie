@@ -36,7 +36,7 @@ const Hero = async ({
         <div className="space-y-6">
           <Link
             href={`/tv-show/${tvShow.id}`}
-            className="block text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
+            className="line-clamp-4 block text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
           >
             {tvShow.name}
           </Link>

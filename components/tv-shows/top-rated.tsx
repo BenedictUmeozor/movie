@@ -9,7 +9,7 @@ import { RenderTvShows } from "../shared/render";
 const TopRated = async () => {
   const { results } = await getTopRatedTvs(1);
 
-  const shuffledTvShows = shuffleArray(results).slice(0, 8);
+  const shuffledTvShows = shuffleArray(results).slice(0, 10);
 
   return (
     <section>

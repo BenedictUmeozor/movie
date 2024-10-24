@@ -7,7 +7,7 @@ import { Movie as MovieInterface } from "@/types/globals";
 import { RenderMovies } from "../shared/render";
 
 const MoviesSection = ({ movies }: { movies: MovieInterface[] }) => {
-  const shuffiedMovies = shuffleArray(movies).slice(0, 8);
+  const shuffiedMovies = shuffleArray(movies).slice(0, 10);
 
   return (
     <section className="my-8">

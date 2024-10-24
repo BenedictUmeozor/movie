@@ -88,7 +88,7 @@ const Hero = memo(({ movieIds, genres }: HeroProps) => {
           <div className="space-y-6">
             <Link
               href={`/movie/${currentMovie?.id}`}
-              className="block text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
+              className="line-clamp-4 block text-4xl font-bold leading-normal tracking-wide max-lg:text-center max-md:text-2xl"
             >
               {currentMovie?.title}
             </Link>

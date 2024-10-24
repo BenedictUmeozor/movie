@@ -9,7 +9,7 @@ import { RenderTvShows } from "../shared/render";
 const OnTheAir = async () => {
   const { results } = await getOnTheAirTvs(1);
 
-  const shuffledTvShows = shuffleArray(results).slice(0, 8);
+  const shuffledTvShows = shuffleArray(results).slice(0, 10);
 
   return (
     <section>

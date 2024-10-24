@@ -17,7 +17,7 @@ const getSimilarSeries = async ({
 const SimilarTvShows = async ({ tvShowId }: { tvShowId: string }) => {
   const { results } = await getSimilarSeries({ tvShowId });
 
-  const tvShows = results.slice(0, 8);
+  const tvShows = results.slice(0, 10);
 
   return (
     <div className="my-12">
