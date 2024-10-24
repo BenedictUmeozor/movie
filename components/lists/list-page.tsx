@@ -57,7 +57,7 @@ const RenderList = ({ items }: { items: IListItem[] }) => {
       <p className="my-8 text-medium-white">
         Showing {items.length} {items.length === 1 ? "item" : "items"}
       </p>
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-y-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {items.map((item) => (
           <ListItem key={item.tmdbId} item={item} />
         ))}
